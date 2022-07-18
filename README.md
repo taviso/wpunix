@@ -15,7 +15,7 @@ c777f6024a95d68a1fc85b42c8e2212b  COREL_WPUNIX.iso
 
 The default look.
 
-![image](https://user-images.githubusercontent.com/123814/179528294-14f8416d-16cc-41c0-898e-6656fd3cc5a6.png)
+![image](https://user-images.githubusercontent.com/123814/179531850-7ed44cf6-2d7d-4d8c-960b-6086870bb4d4.png)
 
 The classic "Reveal Codes" view.
 
