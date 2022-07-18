@@ -1,6 +1,6 @@
-# WordPerfect for UNIX (TM) Character Terminals
+# WordPerfect for UNIX Character Terminals
 
-This is a set of build scripts and patches to make WordPerfect for UNIX
+This is a set of build scripts and patches to make WordPerfect for UNIX (1997)
 work on modern Linux.
 
 You need the following file to build this, available
