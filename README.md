@@ -47,7 +47,7 @@ There is a full scanned manual available online [here](http://www.columbia.edu/~
 
 There is a huge amount of useful information that is *mostly* relevant to wpunix on the [wpdos](http://wpdos.org) and [wptoolbox](https://wptoolbox.com) sites.
 
-If you want the classic "white on blue" look WordPerfect is famous for...
+If you want the classic "white on blue" look...
 
 - Go to `File`>`Setup`>`Display`.
 - Select `Colors/Fonts/Attributes`.
