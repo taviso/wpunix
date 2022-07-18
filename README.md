@@ -11,8 +11,6 @@ $ md5sum COREL_WPUNIX.iso
 c777f6024a95d68a1fc85b42c8e2212b  COREL_WPUNIX.iso
 ```
 
-This is an evaluation copy, but there are no real limitations as far as I can tell.
-
 # Screenshots
 
 The classic "Reveal Codes" view.
@@ -22,6 +20,10 @@ The classic "Reveal Codes" view.
 It uses [Sixels](https://en.wikipedia.org/wiki/Sixel) to generate print previews in the terminal!
 
 ![Screenshot](/doc/wpscreenshot-sixels.png?raw=true "Print Preview")
+
+# Licensing
+
+In theory, this is an evaluation copy, but I haven't noticed any limitations.
 
 # Getting Started
 
