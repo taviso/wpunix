@@ -25,6 +25,8 @@ It uses [Sixels](https://en.wikipedia.org/wiki/Sixel) to generate print previews
 
 The default keybinding to open the menu is <kbd>Esc</kbd>,<kbd>=</kbd>. That means press the <kbd>Esc</kbd> key and then the <kbd>=</kbd> key.
 
+There is a full scanned manual available online [here](http://www.columbia.edu/~em36/wpdos/WPDOS51Reference.pdf), WordPerfect DOS 5.1 and WordPefect UNIX 7.0 are very similar.
+
 If you want the classic "blue" look...
 
 - Go to `File`>`Setup`>`Display`.
