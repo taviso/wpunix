@@ -1,0 +1,7 @@
+*.deb
+*.ISO
+*.deb
+*.idb
+build
+*.tar.gz
+*_i386/

@@ -1,0 +1,8 @@
+Package: wordperfect
+Version: 7.0
+Architecture: i386
+Maintainer: Tavis Ormandy <taviso@gmail.com>
+Description: WordPerfect 7 for UNIX (TM) Character Terminals
+Homepage: https://github.com/taviso/
+Depends:
+
