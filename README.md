@@ -11,6 +11,8 @@ $ md5sum COREL_WPUNIX.iso
 c777f6024a95d68a1fc85b42c8e2212b  COREL_WPUNIX.iso
 ```
 
+> Note: If you just want a `.deb` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
+
 # Screenshots
 
 The default look.
