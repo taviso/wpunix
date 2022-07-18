@@ -19,7 +19,7 @@ The default look.
 
 ![image](https://user-images.githubusercontent.com/123814/179531850-7ed44cf6-2d7d-4d8c-960b-6086870bb4d4.png)
 
-The classic "Reveal Codes" view.
+The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
 
 ![Screenshot](/doc/wpscreenshot-layout.png?raw=true "Layout")
 
