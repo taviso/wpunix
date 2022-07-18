@@ -38,5 +38,7 @@ If you want the classic "blue" look...
 - The default keybinding for the famous "Reveal Codes" window is <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F3</kbd>.
 - There is online help available, press <kbd>F3</kbd> at any time.
 - Set your macro files directory to a somewhere you can write (like your `$HOME`) in `Location of Files` settings.
+- If your terminal supports sixels, enable the `vt340hi_sixel` driver to get print previews.
+
 
 
