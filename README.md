@@ -23,7 +23,7 @@ It uses [Sixels](https://en.wikipedia.org/wiki/Sixel) to generate print previews
 
 # Getting Started
 
-The default keybinding to open the menu is <kbd>Esc</kbd>,<kbd>=</kbd>. That means press the <kbd>Esc</kbd> key and then the <kbd>=</kbd> key.
+The default keybinding to open the menu is <kbd>Esc</kbd>,<kbd>=</kbd>. That means press the <kbd>Esc</kbd> key and then the <kbd>=</kbd> key. You can exit with <kbd>F7</kbd>.
 
 There is a full scanned manual available online [here](http://www.columbia.edu/~em36/wpdos/WPDOS51Reference.pdf), WordPerfect DOS 5.1 and WordPefect UNIX 7.0 are very similar.
 
