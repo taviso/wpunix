@@ -52,6 +52,8 @@ find "${pkgname}" -type d -exec chmod 0755 {} \;
 cp control "${pkgname}/DEBIAN/control"
 cp wp.sh "${pkgname}/usr/bin/wp"
 
+chmod 0755 "${pkgname}/usr/bin/wp"
+
 # Fetch any missing distfiles.
 test -f "${libcurl##*/}" || wget "${libcurl}"
 test -f "${ldsourl##*/}" || wget "${ldsourl}"
