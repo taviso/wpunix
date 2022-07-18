@@ -31,6 +31,8 @@ The built-in macro editor.
 
 ![image](https://user-images.githubusercontent.com/123814/179529235-98f10f47-ad77-443e-8c54-b1b5139b585e.png)
 
+I found this fun print ad for this release [here](https://archive.org/details/word-perfect-5.1-for-unix-ad-1993/page/n1/mode/2up) with a screenshot of the text interface and the GUI.
+
 # Licensing
 
 In theory, this is an evaluation copy, but I haven't noticed any limitations.
