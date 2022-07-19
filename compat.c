@@ -37,6 +37,8 @@ struct olddirent {
     long d_off;
     unsigned short d_reclen;
     char d_name[256];
+    char _pad0;
+    char _pad1;
 };
 
 struct oldstat {
@@ -106,9 +108,10 @@ static size_t translate_getdents(struct olddirent *dst, struct dirent64 *src, si
     // I know for sure a dirent64 is smaller than a dirent, so no need to check
     // if it fits.
     while (srcsz) {
-        strncpy(dst->d_name, src->d_name, sizeof dst->d_name);
+        strncpy(dst->d_name, src->d_name, sizeof(dst->d_name));
+
         dst->d_ino      = src->d_ino;
-        dst->d_reclen   = sizeof(*dst) - sizeof(dst->d_name) + strlen(dst->d_name) + 1;
+        dst->d_reclen   = sizeof(*dst) - sizeof(dst->d_name) + strlen(dst->d_name) + 1 + 1;
         dst->d_off      = src->d_off;
 
         // I don't know what to do here, well this is better than just
@@ -194,10 +197,13 @@ struct dirent * readdir (DIR *dirp)
     struct olddirent *de;
     int result;
 
+    // Avoid bugs with large directory trees.
+    dir->dd_max = dir->dd_max > 256 ? 256 : dir->dd_max;
+
     if (dir->dd_size <= dir->dd_nextloc) {
         void *buf = alloca(dir->dd_max);
 
-        /* read dir->dd_max bytes of directory entries. */
+        // read dir->dd_max bytes of directory entries.
         result = syscall(__NR_getdents64, dir->dd_fd, buf, dir->dd_max);
 
         if (result <= 0) {
@@ -218,20 +224,4 @@ struct dirent * readdir (DIR *dirp)
 uid_t geteuid(void)
 {
     return syscall(__NR_geteuid32);
-}
-
-// The getcwd in libc5 uses opendir/readdir, this is a crappy
-// hack to avoid that.
-char *getcwd(char *buf, size_t size)
-{
-    if (size == 0 || buf == NULL)
-        return NULL;
-
-    // Initialize buffer.
-    memset(buf, 0, size);
-
-    if (syscall(__NR_readlink, "/proc/self/cwd", buf, size - 1) == -1)
-        return NULL;
-
-    return buf;
 }
