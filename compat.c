@@ -198,7 +198,9 @@ struct dirent * readdir (DIR *dirp)
     int result;
 
     // Avoid bugs with large directory trees.
-    dir->dd_max = dir->dd_max > 256 ? 256 : dir->dd_max;
+    dir->dd_max = dir->dd_max > sizeof(*de)
+                ? sizeof(*de)
+                : dir->dd_max;
 
     if (dir->dd_size <= dir->dd_nextloc) {
         void *buf = alloca(dir->dd_max);

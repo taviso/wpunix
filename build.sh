@@ -184,7 +184,7 @@ popd
 
 # Install default configuration.
 install -D --mode=0600 /dev/null ${pkgname}/${prefix}/shlib10/.wp7.lm
-install -D --mode=0600 /dev/null ${pkgname}/${prefix}/wplib/.wp7c.set
+install -D --mode=0644 wp7c.set ${pkgname}/${prefix}/wplib/.wp7c.set
 
 # Create deb file
 dpkg-deb --build --root-owner-group "${pkgname}"
