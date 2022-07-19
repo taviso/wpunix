@@ -1,8 +1,12 @@
 *.deb
 *.ISO
 *.deb
-*.idb
+*.id?
+*.nam
+*.til
+*.rpm
 build
 *.tar.gz
 *_i386/
 .wprc
+.*.sw?

@@ -12,12 +12,14 @@
 #include <string.h>
 #include <err.h>
 
+#define __NR_readlink 85
 #define __NR_stat 106
 #define __NR_lstat 107
 #define __NR_fstat 108
 #define __NR_stat64 195
 #define __NR_lstat64 196
 #define __NR_fstat64 197
+#define __NR_geteuid32 201
 #define __NR_getdents 141
 #define __NR_getdents64 220
 
@@ -104,18 +106,15 @@ static size_t translate_getdents(struct olddirent *dst, struct dirent64 *src, si
     // I know for sure a dirent64 is smaller than a dirent, so no need to check
     // if it fits.
     while (srcsz) {
-
-        if (strlen(src->d_name) >= sizeof(dst->d_name)) {
-            abort();
-        }
-
-        strcpy(dst->d_name, src->d_name);
+        strncpy(dst->d_name, src->d_name, sizeof dst->d_name);
         dst->d_ino      = src->d_ino;
-        dst->d_reclen   = sizeof(*dst) - sizeof(dst->d_name) + strlen(dst->d_name);
+        dst->d_reclen   = sizeof(*dst) - sizeof(dst->d_name) + strlen(dst->d_name) + 1;
         dst->d_off      = src->d_off;
 
+        // I don't know what to do here, well this is better than just
+        // aborting.
         if (dst->d_off != src->d_off) {
-            abort();
+            dst->d_off = -1;
         }
 
         srcsz          -= src->d_reclen;
@@ -133,7 +132,7 @@ int _fxstat(int ver, int fd, void *statbuf)
     struct stat64 stat64buf;
 
     if (ver != _STAT_VER_LINUX_OLD) {
-        abort();
+        return -1;
     }
 
     // We will just truncate long values.
@@ -150,7 +149,7 @@ int _xstat(int ver, const char *pathname, void *statbuf)
     struct stat64 stat64buf;
 
     if (ver != _STAT_VER_LINUX_OLD) {
-        abort();
+        return -1;
     }
 
     // We will just truncate long values.
@@ -167,7 +166,7 @@ int _lxstat(int ver, const char *pathname, void *statbuf)
     struct stat64 stat64buf;
 
     if (ver != _STAT_VER_LINUX_OLD) {
-        abort();
+        return -1;
     }
 
     // We will just truncate long values.
@@ -215,3 +214,24 @@ struct dirent * readdir (DIR *dirp)
     return (void *) de;
 }
 
+// WordPerfect is so old it uses geteuid16, lol.
+uid_t geteuid(void)
+{
+    return syscall(__NR_geteuid32);
+}
+
+// The getcwd in libc5 uses opendir/readdir, this is a crappy
+// hack to avoid that.
+char *getcwd(char *buf, size_t size)
+{
+    if (size == 0 || buf == NULL)
+        return NULL;
+
+    // Initialize buffer.
+    memset(buf, 0, size);
+
+    if (syscall(__NR_readlink, "/proc/self/cwd", buf, size - 1) == -1)
+        return NULL;
+
+    return buf;
+}

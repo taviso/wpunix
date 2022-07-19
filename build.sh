@@ -9,8 +9,8 @@ set -x
 set -e
 
 declare pkgname="wordperfect7.0_i386"
-declare libcver="5.4.46"
-declare libmver="5.0.9"
+declare libcver="5.3.12"
+declare libmver="5.0.6"
 declare prefix="/opt/wp70"
 
 declare wpurl="https://winworldpc.com/product/wordperfect/7x-unix"
@@ -18,8 +18,8 @@ declare wpurl="https://winworldpc.com/product/wordperfect/7x-unix"
 declare tmpfile="$(mktemp)"
 declare topdir="${PWD}"
 
-declare libcurl="https://mirrors.edge.kernel.org/pub/linux/libs/libc5/old/libc-${libcver}.bin.tar.gz"
-declare ldsourl="http://ftp.us.debian.org/debian/pool/main/g/glibc/libc6_2.24-11+deb9u4_i386.deb"
+declare libcurl="https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/libc-5.3.12-27.i386.rpm"
+declare ldsourl="https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/glibc-2.0.7-29.i386.rpm"
 
 # Precompiled with gcc2.7/glibc2.0.7/binutils2.9.1
 declare wp7curl="https://lock.cmpxchg8b.com/files/libcompat-wp7.tar.gz"
@@ -34,10 +34,12 @@ echo Checking for required tools...
 type patchelf
 type wget
 type objcopy
-type ar
+type rpm2cpio
+type cpio
 type awk
 type dpkg-deb
 type install
+type 7z
 
 # Setup directory structure.
 mkdir -m0755 -p "${pkgname}/DEBIAN"
@@ -62,18 +64,24 @@ test -f "${wp7curl##*/}" || wget "${wp7curl}"
 pushd build
 
 # Extract libraries.
-ar xv "../${ldsourl##*/}" data.tar.xz
+rpm2cpio < "../${ldsourl##*/}" | cpio -d -i '*/ld-*'
+rpm2cpio < "../${libcurl##*/}" | cpio -d -i '*/lib[cm].*'
 
 tar -xvf "../${wp7curl##*/}"
-tar -xvf "../${libcurl##*/}" lib/
 
-tar -xvf data.tar.xz ./lib/
+mv usr/i486-linux-libc5/lib/* lib/
+rm -rf usr
 
 ln -fs libc.so.${libcver} lib/libc.so.5
 ln -fs libm.so.${libmver} lib/libm.so.5
 
 # Weaken the symbols we want to patch.
-objcopy -W _lxstat -W _fxstat -W _xstat lib/libc.so.${libcver} lib/libc.so.${libcver}
+objcopy -W geteuid      \
+        -W getcwd       \
+        -W _lxstat      \
+        -W _fxstat      \
+        -W _xstat       \
+        lib/libc.so.${libcver} lib/libc.so.${libcver}
 
 # Extract original WP distribution.
 7z x "${topdir}/COREL_WPUNIX.iso" LINUX SOLARIS shared
@@ -83,9 +91,11 @@ ln -sf ../SOLARIS/_{D,P,T} LINUX/
 ln -sf ../shared LINUX/
 
 # These are only needed during install.
+# This loader is too old to support DT_RPATH :)
 patchelf --set-interpreter "${topdir}/build/lib/ld-linux.so.2" LINUX/_I/wpdecom LINUX/_I/wxar
-patchelf --set-rpath '$ORIGIN/../../lib' LINUX/_I/wpdecom LINUX/_I/wxar
-patchelf --add-needed libcompat.so LINUX/_I/wpdecom LINUX/_I/wxar
+patchelf --add-needed "${topdir}/build//lib/libcompat.so" LINUX/_I/wpdecom LINUX/_I/wxar
+patchelf --replace-needed "libm.so.5" "${topdir}/build/lib/libm.so.5" LINUX/_I/wpdecom LINUX/_I/wxar
+patchelf --replace-needed "libc.so.5" "${topdir}/build/lib/libc.so.5" LINUX/_I/wpdecom LINUX/_I/wxar
 chmod +x LINUX/_I/wxar LINUX/_I/wpdecom
 
 # wxar works in the pwd, so this wrapper makes a tempdir.
@@ -141,9 +151,9 @@ printf "us\n" > root/wplib/.def.lang
 ln -fs wptpl7c.us root/wplib/wptpl.us
 
 # This sets the language.
-cp root/wpmacros/us/* root/wpmacros/
-cp root/wpexpdocs/us/* root/wpexpdocs/
-cp root/wplearn/us/* root/wplearn/
+ln -rs root/wpmacros/us/* root/wpmacros/
+ln -rs root/wpexpdocs/us/* root/wpexpdocs/
+ln -rs root/wplearn/us/* root/wplearn/
 
 # Cleanup some junk
 rm -f root/install.ftp
@@ -156,16 +166,15 @@ find root/ -type f -not -perm /ugo+x -exec chmod 0644 {} \;
 find root/ -type d -exec chmod 0755 {} \;
 
 find root -type f -perm -u+x -exec patchelf --set-interpreter "${prefix}/lib/ld-linux.so.2" {} \;
-find root/ -type f -perm -u+x -exec patchelf --set-rpath "${prefix}/lib" {} \;
-find root/ -type f -perm -u+x -exec patchelf --add-needed libcompat.so {} \;
+find root/ -type f -perm -u+x -exec patchelf --add-needed "${prefix}/lib/libcompat.so" {} \;
+find root/ -type f -perm -u+x -exec patchelf --replace-needed libm.so.5 "${prefix}/lib/libm.so.5" {} \;
+find root/ -type f -perm -u+x -exec patchelf --replace-needed libc.so.5 "${prefix}/lib/libc.so.5" {} \;
 
 # Copy over the runtime libraries
 mv lib root
 
 # Normalize permissions
-find root/ -type f -perm /ugo+x -exec chmod 0755 {} \;
-find root/ -type f -not -perm /ugo+x -exec chmod 0644 {} \;
-find root/ -type d -exec chmod 0755 {} \;
+chmod -R 0755 root/lib
 
 # Install into prefix
 mv root/* "${topdir}/${pkgname}/${prefix}/"
