@@ -8,6 +8,8 @@
 set -x
 set -e
 
+umask 2
+
 declare pkgname="wordperfect7.0_i386"
 declare libcver="5.3.12"
 declare libmver="5.0.6"
@@ -39,7 +41,8 @@ type cpio
 type awk
 type dpkg-deb
 type install
-type 7z
+type bsdtar
+type cpp
 
 # Setup directory structure.
 mkdir -m0755 -p "${pkgname}/DEBIAN"
@@ -84,7 +87,7 @@ objcopy -W geteuid      \
         lib/libc.so.${libcver} lib/libc.so.${libcver}
 
 # Extract original WP distribution.
-7z x "${topdir}/COREL_WPUNIX.iso" LINUX SOLARIS shared
+bsdtar xf "${topdir}/COREL_WPUNIX.iso" LINUX/ SOLARIS/ shared/
 
 rm LINUX/_{D,P,T}
 ln -sf ../SOLARIS/_{D,P,T} LINUX/
@@ -115,14 +118,14 @@ function wxar()
     rm -rf "${tmpdir}"
 }
 
-# Remove rockridge junk from 7z.
+# Remove leftover rockridge junk
 find -name YMTRANS.TBL -delete
 
 # Decompress files
 find LINUX -type f -exec LINUX/_I/wpdecom {} ${tmpfile} \; -exec cp ${tmpfile} {} \;
 find SOLARIS -type f -exec LINUX/_I/wpdecom {} ${tmpfile} \; -exec cp ${tmpfile} {} \;
 
-egrep -hv '^# ' shared/ship53 shared/ship7 | cpp -DALL -DLINUX | egrep -v '^# ' > install.txt
+egrep -hv '^# ' shared/ship53 shared/ship7 | cpp -Wendif-labels -DALL -DLINUX | egrep -v '^# ' > install.txt
 
 # a means archive file
 # b means backup (treat like copy)
@@ -165,7 +168,7 @@ find root/ -type f -perm /ugo+x -exec chmod 0755 {} \;
 find root/ -type f -not -perm /ugo+x -exec chmod 0644 {} \;
 find root/ -type d -exec chmod 0755 {} \;
 
-find root -type f -perm -u+x -exec patchelf --set-interpreter "${prefix}/lib/ld-linux.so.2" {} \;
+find root/ -type f -perm -u+x -exec patchelf --set-interpreter "${prefix}/lib/ld-linux.so.2" {} \;
 find root/ -type f -perm -u+x -exec patchelf --add-needed "${prefix}/lib/libcompat.so" {} \;
 find root/ -type f -perm -u+x -exec patchelf --replace-needed libm.so.5 "${prefix}/lib/libm.so.5" {} \;
 find root/ -type f -perm -u+x -exec patchelf --replace-needed libc.so.5 "${prefix}/lib/libc.so.5" {} \;
@@ -173,7 +176,7 @@ find root/ -type f -perm -u+x -exec patchelf --replace-needed libc.so.5 "${prefi
 # Copy over the runtime libraries
 mv lib root
 
-# Normalize permissions
+# Normalize those permissions
 chmod -R 0755 root/lib
 
 # Install into prefix
