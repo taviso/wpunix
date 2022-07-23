@@ -31,6 +31,11 @@ The built-in macro editor.
 
 ![image](https://user-images.githubusercontent.com/123814/179529235-98f10f47-ad77-443e-8c54-b1b5139b585e.png)
 
+There is a interactive equation editor, it can use sixels or ascii art.
+
+![image](https://user-images.githubusercontent.com/123814/180581956-271e6959-b9f4-4e8f-b7bd-b59c7bf486ff.png)
+
+
 I found this fun print ad for this release [here](https://archive.org/details/word-perfect-5.1-for-unix-ad-1993/page/n1/mode/2up) with a screenshot of the text interface and the GUI.
 
 # Licensing
@@ -45,9 +50,9 @@ The default keybinding to open the menu is <kbd>Esc</kbd>,<kbd>=</kbd>. That mea
 
 You can exit with <kbd>F7</kbd>.
 
-There is a full scanned manual available online [here](http://www.columbia.edu/~em36/wpdos/WPDOS51Reference.pdf), WordPerfect DOS 5.1 and WordPerfect UNIX 7.0 are very similar.
+There is a full manual available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
 
-There is a huge amount of useful information that is *mostly* relevant to wpunix on the [wpdos](http://wpdos.org) and [wptoolbox](https://wptoolbox.com) sites.
+There is also a huge amount of useful information that is *mostly* relevant to wpunix on the [wpdos](http://wpdos.org) and [wptoolbox](https://wptoolbox.com) sites.
 
 If you want the classic "white on blue" look...
 
