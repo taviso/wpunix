@@ -19,6 +19,7 @@
 #define __NR_stat64 195
 #define __NR_lstat64 196
 #define __NR_fstat64 197
+#define __NR_getuid32 199
 #define __NR_geteuid32 201
 #define __NR_getdents 141
 #define __NR_getdents64 220
@@ -226,4 +227,9 @@ struct dirent * readdir (DIR *dirp)
 uid_t geteuid(void)
 {
     return syscall(__NR_geteuid32);
+}
+
+uid_t getuid(void)
+{
+    return syscall(__NR_getuid32);
 }

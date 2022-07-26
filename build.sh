@@ -80,6 +80,7 @@ ln -fs libm.so.${libmver} lib/libm.so.5
 
 # Weaken the symbols we want to patch.
 objcopy -W geteuid      \
+        -W getuid       \
         -W getcwd       \
         -W _lxstat      \
         -W _fxstat      \
@@ -125,7 +126,7 @@ find -name YMTRANS.TBL -delete
 find LINUX -type f -exec LINUX/_I/wpdecom {} ${tmpfile} \; -exec cp ${tmpfile} {} \;
 find SOLARIS -type f -exec LINUX/_I/wpdecom {} ${tmpfile} \; -exec cp ${tmpfile} {} \;
 
-egrep -hv '^# ' shared/ship53 shared/ship7 | cpp -Wendif-labels -DALL -DLINUX | egrep -v '^# ' > install.txt
+egrep -hv '^# ' shared/ship53 shared/ship7 | cpp -Wno-endif-labels -DALL -DLINUX | egrep -v '^# ' > install.txt
 
 # a means archive file
 # b means backup (treat like copy)
