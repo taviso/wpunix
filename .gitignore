@@ -10,3 +10,7 @@ build
 *_i386/
 .wprc
 .*.sw?
+*.o
+*.so
+reference
+symbols

@@ -23,9 +23,6 @@ declare topdir="${PWD}"
 declare libcurl="https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/libc-5.3.12-27.i386.rpm"
 declare ldsourl="https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/glibc-2.0.7-29.i386.rpm"
 
-# Precompiled with gcc2.7/glibc2.0.7/binutils2.9.1
-declare wp7curl="https://lock.cmpxchg8b.com/files/libcompat-wp7.tar.gz"
-
 test -f "${topdir}/COREL_WPUNIX.iso" || {
     echo "You need to download COREL_WPUNIX.iso from ${wpurl}"
     exit 1
@@ -62,7 +59,6 @@ chmod 0755 "${pkgname}/usr/bin/wp"
 # Fetch any missing distfiles.
 test -f "${libcurl##*/}" || wget "${libcurl}"
 test -f "${ldsourl##*/}" || wget "${ldsourl}"
-test -f "${wp7curl##*/}" || wget "${wp7curl}"
 
 pushd build
 
@@ -70,7 +66,8 @@ pushd build
 rpm2cpio < "../${ldsourl##*/}" | cpio -d -i '*/ld-*'
 rpm2cpio < "../${libcurl##*/}" | cpio -d -i '*/lib[cm].*'
 
-tar -xvf "../${wp7curl##*/}"
+cp ../libcompat.so lib/
+cp ../libwppatch.so lib/
 
 mv usr/i486-linux-libc5/lib/* lib/
 rm -rf usr
@@ -85,6 +82,7 @@ objcopy -W geteuid      \
         -W _lxstat      \
         -W _fxstat      \
         -W _xstat       \
+        -W _init        \
         lib/libc.so.${libcver} lib/libc.so.${libcver}
 
 # Extract original WP distribution.
@@ -173,6 +171,9 @@ find root/ -type f -perm -u+x -exec patchelf --set-interpreter "${prefix}/lib/ld
 find root/ -type f -perm -u+x -exec patchelf --add-needed "${prefix}/lib/libcompat.so" {} \;
 find root/ -type f -perm -u+x -exec patchelf --replace-needed libm.so.5 "${prefix}/lib/libm.so.5" {} \;
 find root/ -type f -perm -u+x -exec patchelf --replace-needed libc.so.5 "${prefix}/lib/libc.so.5" {} \;
+
+# Load our patch module into wp
+patchelf --add-needed "${prefix}/lib/libwppatch.so" root/wpbin/wp
 
 # Copy over the runtime libraries
 mv lib root
