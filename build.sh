@@ -10,7 +10,7 @@ set -e
 
 umask 2
 
-declare pkgname="wordperfect7.0_i386"
+declare pkgname="${1:-wordperfect7.0_i386}"
 declare libcver="5.3.12"
 declare libmver="5.0.6"
 declare prefix="/opt/wp70"
@@ -36,7 +36,6 @@ type objcopy
 type rpm2cpio
 type cpio
 type awk
-type dpkg-deb
 type install
 type bsdtar
 type cpp
@@ -162,6 +161,9 @@ rm -f root/install.ftp
 rm -f root/install.wp
 rm -f root/readme.ftp
 
+# These dont seem useful.
+rm -f root/shbin10/ptrinst
+
 # Normalize permissions
 find root/ -type f -perm /ugo+x -exec chmod 0755 {} \;
 find root/ -type f -not -perm /ugo+x -exec chmod 0644 {} \;
@@ -191,10 +193,5 @@ popd
 install -D --mode=0600 /dev/null ${pkgname}/${prefix}/shlib10/.wp7.lm
 install -D --mode=0644 wp7c.set ${pkgname}/${prefix}/wplib/.wp7c.set
 
-# Create deb file
-dpkg-deb --build --root-owner-group "${pkgname}"
-
 # Cleanup
-rm -rf build "${tmpfile}" "${pkgname}"
-
-ls -l "${pkgname}.deb"
+rm -rf build "${tmpfile}"

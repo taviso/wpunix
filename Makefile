@@ -6,8 +6,12 @@ CFLAGS=-fno-stack-protector -m32
 
 all: $(PACKAGE).deb
 
-$(PACKAGE).deb: libcompat.so libwppatch.so
-	bash build.sh
+$(PACKAGE).deb: $(PACKAGE)
+	dpkg-deb --build --root-owner-group $(PACKAGE)
+	@ls -l $@
+
+$(PACKAGE): libcompat.so libwppatch.so
+	bash build.sh $(PACKAGE)
 
 libcompat.so: compat.o
 	ld -m elf_i386 -shared -o $@ $<
