@@ -1,4 +1,4 @@
-CFLAGS=-ggdb3 -O0 -fsanitize=address
+CFLAGS=-ggdb3 -O0
 CPPFLAGS=-I. -W -Wall -Wno-unused-parameter -Wno-sign-compare
 LDFLAGS=$(CFLAGS)
 LDLIBS=
