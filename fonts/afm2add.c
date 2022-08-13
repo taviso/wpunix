@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <unistd.h>
 #include <err.h>
-
 #include "parseafm.h"
 #include "fonts.h"
 #include "ini.h"
@@ -12,17 +12,41 @@
 
 static void freestorage(FontInfo *fi);
 
+static const char *ptrname = "GhostScript";
+
+static void print_usage(char *progname, int exitcode)
+{
+    fprintf(stderr, "Usage: %s [-p PrinterName] filename.afm\n", progname);
+    fprintf(stderr, "   -p: The default printer name is GhostScript, override it with this.\n");
+    fprintf(stderr, "\n");
+    exit(exitcode);
+}
+
 int main(int argc, char **argv)
 {
     FontInfo *fi;
     char filename[8+1+3+1];
     FILE *afm, *tbl;
+    int opt;
 
-    if (argc != 2) {
-        errx(EXIT_FAILURE, "No .afm file specified");
+    while ((opt = getopt(argc, argv, "p:h")) != -1) {
+        switch (opt) {
+            case 'p': ptrname = optarg;
+                      break;
+            case 'h': print_usage(*argv, EXIT_SUCCESS);
+                      break;
+            default:
+                     print_usage(*argv, EXIT_FAILURE);
+                     break;
+        }
     }
 
-    if ((afm = fopen(argv[1], "r")) == NULL) {
+    if (optind >= argc) {
+        warnx("There was no .afm file specified on the commandline.\n");
+        print_usage(*argv, EXIT_FAILURE);
+    }
+
+    if ((afm = fopen(argv[optind], "r")) == NULL) {
         err(EXIT_FAILURE, "Failed to open specified file");
     }
 
@@ -105,7 +129,7 @@ int main(int argc, char **argv)
         err(EXIT_FAILURE, "failed to create operations file %s", filename);
     }
 
-    if (generate_operations_file("GhostScript",
+    if (generate_operations_file(ptrname,
                                  fi,
                                  NULL,
                                  NULL,
