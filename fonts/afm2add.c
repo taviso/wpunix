@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <err.h>
 
 #include "parseafm.h"
 #include "fonts.h"
@@ -19,50 +18,58 @@ int main(int argc, char **argv)
     FILE *afm, *tbl;
 
     if (argc != 2) {
-        errx(EXIT_FAILURE, "No .afm file specified");
-    }
+				fprintf(stderr, "No .afm file specified\n");
+				return EXIT_FAILURE;
+			}
 
     if ((afm = fopen(argv[1], "r")) == NULL) {
-        err(EXIT_FAILURE, "Failed to open specified file");
-    }
+				fprintf(stderr, "Failed to open specified file\n");
+				return EXIT_FAILURE;
+			}
 
     // This describes the font file we're translating.
     if (parseFile(afm, &fi, P_GMP) != ok) {
-        warnx("The afm file was not *fully* parsed (probably still okay).");
+        fprintf(stderr, "The afm file was not *fully* parsed (probably still okay).");
     }
 
     // This contains the pslgyph <=> wordperfect mappings.
     if (initialize_charmap("charmap.ini") != true) {
-        err(EXIT_FAILURE, "Failed to parse the charmap ini file");
-    }
+				fprintf(stderr, "Failed to parse the charmap ini file\n");
+				return EXIT_FAILURE;
+			}
 
     // Make sure this makes sense.
     if (fi->gfi->fontName == NULL) {
-        err(EXIT_FAILURE, "The font does not have a name");
-    }
+				fprintf(stderr, "The font does not have a name\n");
+				return EXIT_FAILURE;
+			}
 
     // Only proportional fonts use kerning and spacing.
     if (fi->gfi->isFixedPitch == false)  {
         sprintf(filename, "%.8s.KRN", fi->gfi->fontName);
 
         if ((tbl = fopen(filename, "w")) == NULL) {
-            err(EXIT_FAILURE, "failed to create kerning table %s", filename);
-        }
+				fprintf(stderr, "Failed to create kerning table\n");
+				// message above included %s, but this generates a warning that I can't fix
+				return EXIT_FAILURE;
+			}
 
         if (generate_kerning_table(fi,
                                    tbl,
                                    fi->gfi->fontName,
                                    true,
                                    12) != true) {
-            err(EXIT_FAILURE, "failed to generate kerning table");
-        }
+				fprintf(stderr, "failed to generate kerning table\n");
+				return EXIT_FAILURE;
+			}
 
         fclose(tbl);
         sprintf(filename, "%.8s.SPC", fi->gfi->fontName);
 
         if ((tbl = fopen(filename, "w")) == NULL) {
-            err(EXIT_FAILURE, "failed to create spacing table %s", filename);
-        }
+				fprintf(stderr, "Failure to create spacing table\n");
+				return EXIT_FAILURE;
+			}
 
         if (generate_spacing_table(fi,
                                    tbl,
@@ -70,8 +77,9 @@ int main(int argc, char **argv)
                                    NULL,
                                    true,
                                    12) != true) {
-            err(EXIT_FAILURE, "failed to generate spacing table");
-        }
+				fprintf(stderr, "Failed to generate spacing table\n");
+				return EXIT_FAILURE;
+			}
 
         fclose(tbl);
     }
@@ -79,31 +87,36 @@ int main(int argc, char **argv)
     sprintf(filename, "%.8s.TYP", fi->gfi->fontName);
 
     if ((tbl = fopen(filename, "w")) == NULL) {
-        err(EXIT_FAILURE, "failed to create typeface descriptor %s", filename);
-    }
+				fprintf(stderr, "failure not yet specified");
+				return EXIT_FAILURE;
+			}
 
     if (generate_typeface_table(fi, tbl, fi->gfi->fontName, true) != true) {
-        err(EXIT_FAILURE, "failed to generate typeface descriptor");
-    }
+				fprintf(stderr, "failure not yet specified");
+				return EXIT_FAILURE;
+			}
 
     fclose(tbl);
     sprintf(filename, "%.8s.MAP", fi->gfi->fontName);
 
     if ((tbl = fopen(filename, "w")) == NULL) {
-        err(EXIT_FAILURE, "failed to create character map %s", filename);
-    }
+				fprintf(stderr, "failure not yet specified");
+				return EXIT_FAILURE;
+			}
 
     if (generate_charmap_table(fi, tbl, fi->gfi->fontName, true) != true) {
-        err(EXIT_FAILURE, "failed to create character map");
-    }
+				fprintf(stderr, "Failed to create character map\n");
+				return EXIT_FAILURE;
+			}
 
     fclose(tbl);
 
     sprintf(filename, "%.8s.ADD", fi->gfi->fontName);
 
     if ((tbl = fopen(filename, "w")) == NULL) {
-        err(EXIT_FAILURE, "failed to create operations file %s", filename);
-    }
+				fprintf(stderr, "failed to create operations file %s\n", filename);
+				return EXIT_FAILURE;
+			}
 
     if (generate_operations_file("GhostScript",
                                  fi,
@@ -113,8 +126,9 @@ int main(int argc, char **argv)
                                  tbl,
                                  true,
                                  12) != true) {
-        err(EXIT_FAILURE, "failed to create operations file");
-    }
+				fprintf(stderr, "failed to create operations file\n");
+				return EXIT_FAILURE;
+			}
 
     fprintf(stderr, "Translation seems to have worked.\n");
 
