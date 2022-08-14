@@ -4,7 +4,7 @@ This is a set of build scripts and patches to make WordPerfect for UNIX (Release
 work on modern Linux.
 
 You need the following file to build this, available
-[here](https://winworldpc.com/product/wordperfect/7x-unix).
+[here](https://archive.org/details/corel-word-perfect-7-for-unix-linux-7.0-1998-06-english-cd).
 
 ```
 $ md5sum COREL_WPUNIX.iso
