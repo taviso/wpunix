@@ -61,11 +61,9 @@ static int charmapline(void *user, const char *section, const char *name, const 
     return 1;
 
 error:
-    {
-				fprintf(stderr,"The charmap entry for %s in %s was not valid.\n", name, section);
-				return EXIT_FAILURE;
-			}
-    return 0;
+    fprintf(stderr,"The charmap entry for %s in %s was not valid.\n", name, section);
+
+    exit(EXIT_FAILURE);
 }
 
 bool initialize_charmap()

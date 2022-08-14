@@ -46,19 +46,19 @@ void gs_init_interpreter()
 {
     char * gsargs[] = { "gseval", "-q" };
 
-    if (gsapi_new_instance(&minst, NULL) < 0){
-				fprintf(stderr, "gsapi_new_instance() failed\n");
-				return EXIT_FAILURE;
-			}
+    if (gsapi_new_instance(&minst, NULL) < 0) {
+        fprintf(stderr, "gsapi_new_instance() failed\n");
+        exit(EXIT_FAILURE);
+    }
 
     gsapi_set_arg_encoding(minst, GS_ARG_ENCODING_UTF8);
 
     gsapi_set_stdio(minst, gsdll_stdin, gsdll_stdout, gsdll_stderr);
 
     if (gsapi_init_with_args(minst, countof(gsargs), gsargs) != 0){
-				fprintf(stderr, "gsapi_init_with_args() failed\n");
-				return EXIT_FAILURE;
-			}
+        fprintf(stderr, "gsapi_init_with_args() failed\n");
+        exit(EXIT_FAILURE);
+    }
     return;
 }
 
@@ -98,9 +98,9 @@ int32_t gs_eval_int(const char *str, ...)
     code = gsapi_run_string(minst, cmdbuf, 0, &result);
 
     if (code != 0) {
-				fprintf(stderr,"gs error for `%s`\n", cmdbuf));
-				return EXIT_FAILURE;
-			}
+        fprintf(stderr,"gs error for `%s`\n", cmdbuf);
+        exit(EXIT_FAILURE);
+    }
 
     gsapi_run_string(minst, "flush", 0, &result);
 
@@ -127,9 +127,9 @@ char * gs_eval_str(const char *str, ...)
     code = gsapi_run_string(minst, cmdbuf, 0, &result);
 
     if (code != 0) {
-				fprintf(stderr, "failure not yet specified");
-				return EXIT_FAILURE;
-			}
+        fprintf(stderr, "gs error for `%s`\n", cmdbuf);
+        exit(EXIT_FAILURE);
+    }
     gsapi_run_string(minst, "flush", 0, &result);
 
     assert(outbufsz);

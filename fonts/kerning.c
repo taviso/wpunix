@@ -170,9 +170,9 @@ bool generate_kerning_table(FontInfo *fi,
                                 glyphpair);
 
                 if (asciipair + glyphpair == 0) {
-										fprintf(stderr, "No glyphs in this font that I recognize, is it a graphic font???\n");
-										return EXIT_FAILURE;
-								}
+                    fprintf(stderr, "No glyphs in this font that I recognize, is it a graphic font???\n");
+                    return false;
+                }
 
                 putword(stream, asciipair);
                 putword(stream, glyphpair);
