@@ -1,5 +1,5 @@
 Name:           wpunix7c
-Version:        0.05
+Version:        0.06
 Release:        1%{?dist}
 Summary:        WordPerfect for UNIX (TM) Character Terminals
 License:        Abandonware
@@ -25,9 +25,6 @@ cp %{_topdir}/SOURCES/Corel%20WordPerfect%207%20for%20Unix%20Linux%20%287.0%29%2
 
 %build
 make wordperfect7.0_i386
-rm -f wordperfect7.0_i386/opt/wp70/shbin10/ptrinst
-rm -f wordperfect7.0_i386/opt/wp70/shbin10/wpxtool
-rm -f wordperfect7.0_i386/opt/wp70/shared/wpinstg
 
 %install
 cp -r wordperfect7.0_i386/opt %{buildroot}
