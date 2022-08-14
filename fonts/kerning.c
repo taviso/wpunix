@@ -4,7 +4,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <err.h>
 
 #include "parseafm.h"
 #include "prefix.h"
@@ -171,8 +170,9 @@ bool generate_kerning_table(FontInfo *fi,
                                 glyphpair);
 
                 if (asciipair + glyphpair == 0) {
-                    errx(EXIT_FAILURE, "No glyphs in this font that I recognize, is it a graphic font???");
-                }
+										fprintf(stderr, "No glyphs in this font that I recognize, is it a graphic font???\n");
+										return EXIT_FAILURE;
+								}
 
                 putword(stream, asciipair);
                 putword(stream, glyphpair);
