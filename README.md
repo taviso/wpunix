@@ -44,7 +44,7 @@ The built-in macro editor.
 
 There is a interactive equation editor, it can use sixels or ascii art.
 
-![image](https://user-images.githubusercontent.com/123814/180581956-271e6959-b9f4-4e8f-b7bd-b59c7bf486ff.png)
+![image](https://user-images.githubusercontent.com/123814/184558891-d9503147-5b8d-49c8-930b-3c1ac010aecb.png)
 
 ## Licensing
 
