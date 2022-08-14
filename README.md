@@ -2,7 +2,7 @@
 
 This is a set of build scripts and patches to make WordPerfect for UNIX work on modern Linux.
 
-WordPerfect is a powerful Word Processor for the terminal, more information and a quick introduction is available on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started). There is also a [FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions a problems.
+WordPerfect is a powerful Word Processor for the terminal, more information and a quick introduction is available on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started). There is also a [FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and problems.
 
 ## Building
 
