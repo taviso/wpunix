@@ -6,7 +6,6 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-#include <err.h>
 
 #include "prefix.h"
 #include "charset.h"
@@ -62,7 +61,10 @@ static int charmapline(void *user, const char *section, const char *name, const 
     return 1;
 
 error:
-    errx(EXIT_FAILURE, "The charmap entry for %s in %s was not valid.", name, section);
+    {
+				fprintf(stderr,"The charmap entry for %s in %s was not valid.\n", name, section);
+				return EXIT_FAILURE;
+			}
     return 0;
 }
 
