@@ -145,6 +145,9 @@ install -D --mode=0755 LINUX/_B/wpexc root/shbin10/wpexc
 cp -f ../xterm.trs root/shlib10/xterm.trs
 cp -f ../xterm.trs root/shlib10/xterm-256color.trs
 
+# Ghostscript Printer Resources
+cp -f ../gscript.all root/shlib10/gscript.all
+
 # Set default language.
 printf "us\n" > root/shlib10/.def.lang
 printf "us\n" > root/wplib/.def.lang
@@ -163,6 +166,8 @@ rm -f root/readme.ftp
 
 # These dont seem useful.
 rm -f root/shbin10/ptrinst
+rm -f root/shbin10/wpxtool
+rm -f root/shared/wpinstg
 
 # Normalize permissions
 find root/ -type f -perm /ugo+x -exec chmod 0755 {} \;
