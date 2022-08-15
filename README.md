@@ -2,19 +2,29 @@
 
 This is a set of build scripts and patches to make WordPerfect for UNIX work on modern Linux.
 
-WordPerfect is a powerful Word Processor for the terminal, more information and a quick introduction is available on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started). There is also a [FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and problems.
+WordPerfect is a powerful *word processor* for the terminal. There is more information and a quick introduction on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started), and a [FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and problems.
 
 ## Building
 
-You need the following file to build this, available
-[here](https://archive.org/details/corel-word-perfect-7-for-unix-linux-7.0-1998-06-english-cd).
+> Note: If you just want a `deb` or `rpm` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
+
+You need the following file to build this, available from [archive.org](https://archive.org/details/corel-word-perfect-7-for-unix-linux-7.0-1998-06-english-cd).
 
 ```
 $ md5sum COREL_WPUNIX.iso
 c777f6024a95d68a1fc85b42c8e2212b  COREL_WPUNIX.iso
 ```
 
-> Note: If you just want a `deb` or `rpm` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
+### Packages
+
+The following packages are required
+
+| Ubuntu              | Fedora              |
+| ------------------- | ------------------- |
+| build-essential     | glibc-devel.i686    |
+| gcc-multilib        | libgcc.i686         |
+| bsdtar              | bsdtar              |
+| patchelf            | patchelf            |
 
 ## Getting Started
 
