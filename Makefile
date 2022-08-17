@@ -1,17 +1,19 @@
-PACKAGE=wordperfect7.0_i386
 CPPFLAGS=-Iinclude
 CFLAGS=-fno-stack-protector -m32
 
 .PHONY: clean
 
-all: $(PACKAGE).deb
+all: wordperfect8_i386.deb
 
-$(PACKAGE).deb: $(PACKAGE)
-	dpkg-deb --build --root-owner-group $(PACKAGE)
+%_i386.deb: %_i386
+	dpkg-deb --build --root-owner-group $^
 	@ls -l $@
 
-$(PACKAGE): libcompat.so libwppatch.so
-	bash build.sh $(PACKAGE)
+wordperfect8_i386: libcompat.so libwppatch.so
+	bash build8.sh $@
+
+wordperfect7_i386: libcompat.so libwppatch.so
+	bash build7.sh $@
 
 libcompat.so: compat.o
 	ld -m elf_i386 -shared -o $@ $<
@@ -21,5 +23,5 @@ libwppatch.so: patch.o
 
 clean:
 	rm -f *.o *.deb *.so
-	rm -rf build $(PACKAGE)
+	rm -rf build wordperfect?_i386
 	rm -rf lib

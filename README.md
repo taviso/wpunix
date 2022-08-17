@@ -1,14 +1,14 @@
 # WordPerfect for UNIX Character Terminals
 
-This is a set of build scripts and patches to make WordPerfect for UNIX (Released 1997)
+This is a set of build scripts and patches to make WordPerfect for UNIX
 work on modern Linux.
 
 You need the following file to build this, available
-[here](https://archive.org/details/corel-word-perfect-7-for-unix-linux-7.0-1998-06-english-cd).
+[here](https://archive.org/details/corel-wpunix-8/box_f.jpg).
 
 ```
-$ md5sum COREL_WPUNIX.iso
-c777f6024a95d68a1fc85b42c8e2212b  COREL_WPUNIX.iso
+$ md5sum COREL_WPUNIX_1.iso
+036d10f279aecc61704b214e7bd58a6d COREL_WPUNIX_1.iso
 ```
 
 > Note: If you just want a `.deb` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
