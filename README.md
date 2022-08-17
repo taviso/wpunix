@@ -3,6 +3,16 @@
 This is a set of build scripts and patches to make WordPerfect for UNIX
 work on modern Linux.
 
+WordPerfect is a powerful *word processor* for the terminal. There is more
+information and a quick introduction on the
+[wiki](https://github.com/taviso/wpunix/wiki/Getting-Started), and a
+[FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and
+problems.
+
+## Building
+
+> Note: If you just want a `deb` or `rpm` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
+
 You need the following file to build this, available
 [here](https://archive.org/details/corel-wpunix-8/box_f.jpg).
 
@@ -11,9 +21,28 @@ $ md5sum COREL_WPUNIX_1.iso
 036d10f279aecc61704b214e7bd58a6d COREL_WPUNIX_1.iso
 ```
 
-> Note: If you just want a `.deb` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
+### Packages
 
-# Screenshots
+The following packages are required
+
+| Ubuntu              | Fedora              |
+| ------------------- | ------------------- |
+| build-essential     | glibc-devel.i686    |
+| gcc-multilib        | libgcc.i686         |
+| bsdtar              | bsdtar              |
+| patchelf            | patchelf            |
+
+## Getting Started
+
+Run `wp` to start WordPerfect. The default keybinding to open the menu is
+<kbd>Esc</kbd>+<kbd>=</kbd>.
+
+There is a full manual available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
+
+There is also a huge amount of useful information that is *mostly* relevant to
+wpunix on the [wpdos](http://www.columbia.edu/~em36/wpdos/unix.html) site.
+
+## Screenshots
 
 The default look.
 
@@ -33,48 +62,9 @@ The built-in macro editor.
 
 There is a interactive equation editor, it can use sixels or ascii art.
 
-![image](https://user-images.githubusercontent.com/123814/180581956-271e6959-b9f4-4e8f-b7bd-b59c7bf486ff.png)
+![image](https://user-images.githubusercontent.com/123814/184558891-d9503147-5b8d-49c8-930b-3c1ac010aecb.png)
 
+## Licensing
 
-I found this fun print ad for this release [here](https://archive.org/details/word-perfect-5.1-for-unix-ad-1993/page/n1/mode/2up) with a screenshot of the text interface and the GUI.
-
-# Licensing
-
-In theory, this is an evaluation copy, but I haven't noticed any limitations.
-
-# Getting Started
-
-Run `wp` to start WordPerfect.
-
-The default keybinding to open the menu is <kbd>Esc</kbd>,<kbd>=</kbd>. That means press the <kbd>Esc</kbd> key and then the <kbd>=</kbd> key.
-
-You can exit with <kbd>F7</kbd>.
-
-There is a full manual available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
-
-There is also a huge amount of useful information that is *mostly* relevant to wpunix on the [wpdos](http://wpdos.org) and [wptoolbox](https://wptoolbox.com) sites.
-
-If you want the classic "white on blue" look...
-
-- Go to `File`>`Setup`>`Display`.
-- Select `Colors/Fonts/Attributes`.
-- Set the `BG` for all Attributes to `f`.
-- Press <kbd>F7</kbd> to close.
-
-![image](https://user-images.githubusercontent.com/123814/179447833-cb688b39-2aad-4816-a031-974df80e4663.png)
-
-## Tips 
-
-- The default keybinding for the famous "Reveal Codes" window is <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F3</kbd>.
-- There is online help available, press <kbd>F3</kbd> at any time.
-- Set your macro files directory to a somewhere you can write (like your `$HOME`) in `Location of Files` settings.
-- If your terminal supports sixels, enable the `vt340hi_sixel` driver to get print previews.
-
-# Terminals
-
-WordPerfect comes with a utility called `wpterm` for adjusting the terminal definition.
-
-The bundled terminal definitions were decades out of date, so I updated them to work with modern xterm-compatible terminals.
-
-
+In theory, this is a demonstration copy, but I haven't noticed any limitations.
 
