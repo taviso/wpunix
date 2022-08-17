@@ -28,11 +28,11 @@ WordPerfect is a word processing application for character terminals.
 cp %{SOURCE1} %{SOURCE2} %{SOURCE3} .
 
 %build
-make %{name}.0_i386
+make %{name}_i386
 
 %install
-cp -r %{name}.0_i386/opt %{buildroot}
-cp -r %{name}.0_i386/usr %{buildroot}
+cp -r %{name}_i386/opt %{buildroot}
+cp -r %{name}_i386/usr %{buildroot}
 
 %files
 /opt
