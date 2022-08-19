@@ -95,7 +95,7 @@ ln -sf ../shared linux/
 # These are only needed during install.
 # This loader is too old to support DT_RPATH :)
 patchelf --set-interpreter "${topdir}/build/lib/ld-linux.so.2" linux/ins/wpdecom linux/ins/wxar
-patchelf --add-needed "${topdir}/build//lib/libcompat.so" linux/ins/wpdecom linux/ins/wxar
+patchelf --add-needed "${topdir}/build/lib/libcompat.so" linux/ins/wpdecom linux/ins/wxar
 patchelf --replace-needed "libm.so.5" "${topdir}/build/lib/libm.so.5" linux/ins/wpdecom linux/ins/wxar
 patchelf --replace-needed "libc.so.5" "${topdir}/build/lib/libc.so.5" linux/ins/wpdecom linux/ins/wxar
 chmod +x linux/ins/wxar linux/ins/wpdecom
@@ -187,6 +187,7 @@ patchelf --add-needed "${prefix}/lib/libwppatch.so" root/wpbin/wp
 # Fix the tools we used during installation.
 patchelf --replace-needed "${topdir}/build/lib/libm.so.5" "${prefix}/lib/libm.so.5" root/shared/wpdecompress root/shared/wxar
 patchelf --replace-needed "${topdir}/build/lib/libc.so.5" "${prefix}/lib/libc.so.5" root/shared/wpdecompress root/shared/wxar
+patchelf --remove-needed "${topdir}/build/lib/libcompat.so" root/shared/wpdecompress root/shared/wxar
 
 # Copy over the runtime libraries
 mv lib root
