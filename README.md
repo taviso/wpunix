@@ -23,7 +23,7 @@ $ md5sum COREL_WPUNIX_1.iso
 
 ### Packages
 
-The following packages are required
+The following packages are required to build the WordPerfect patches.
 
 | Ubuntu              | Fedora              |
 | ------------------- | ------------------- |
