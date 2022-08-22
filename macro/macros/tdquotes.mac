@@ -1,0 +1,43 @@
+/* vim: set ft=cpp: */
+
+#include "system.h"
+#include "macro.h"
+#include "utils.h"
+#include "keycodes.h"
+
+#pragma title Typographic Double Quotes
+
+/* If we're not editing a document, do nothing */
+passthru_key_unless(EDIT_DOC)
+
+/* Lookup what character is left of the cursor */
+case (leftchar())
+    match(KEY_SPACE, NewQuote)
+    match(KEY_ENTER, NewQuote)
+    match(KEY_TAB, NewQuote)
+    match(KEY_HPAGE, NewQuote)
+    /* 0x0420 “ */
+    match(1056, CloseQuote)
+    /* 0x041f ” */
+    match(1055, OpenQuote)
+esac
+
+/* Not whitespace; assume we're closing an open quote */
+literal(”)
+quit()
+
+/* Adjacent to an existing quote; toggle it */
+label(OpenQuote)
+    {Backspace}
+    literal(“)
+    quit()
+
+label(CloseQuote)
+    {Backspace}
+    literal(”)
+    quit()
+
+/* Whitespace; assume we're opening a new quote */
+label(NewQuote)
+    literal(“)
+    quit()

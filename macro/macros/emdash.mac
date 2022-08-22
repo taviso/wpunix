@@ -1,0 +1,22 @@
+/* vim: set ft=cpp: */
+
+#include "system.h"
+#include "macro.h"
+#include "utils.h"
+#include "keycodes.h"
+
+#pragma title Double Dash To Typographic Emdash
+
+/* If we're not editing a document, do nothing */
+passthru_key_unless(EDIT_DOC)
+
+/* Lookup what character is left of the cursor */
+if (leftchar() = KEY_DASH)
+    /* This is a second dash, replace it with an emdash */
+    {Backspace}
+    literal(—)
+    quit()
+fi
+
+/* No existing dash */
+{original key}

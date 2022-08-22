@@ -96,3 +96,10 @@ If you have a really complicated macro, you can use cpp to preprocess your macro
 That means you can use `#include` to split your macro up into multiple files,
 `#ifdef` to enable or disable features, and other preprocess features.
 
+An example commandline would be:
+
+`cpp mymacro.mac | ./mactool -s -t "Cool Macro" -c -o mymacro.wpm`
+
+See the macros directory for some examples.
+
+
