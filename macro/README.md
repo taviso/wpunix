@@ -83,7 +83,7 @@ If you've spent any time writing macros, you know it can be difficult to get
 the tildes balanced. There are some routines defined in `macro.h` that take
 care of applying all the tildes for you.
 
-Let's take a look.
+Let's take a look, this really is a WordPerfect macro!
 
 ```cpp
 #include "system.h"
@@ -130,7 +130,8 @@ label(NewQuote)
 ```
 
 As you can see, there is not a single tilde in this routine, the cpp macros
-take care of everything.
+take care of everything. There are new macros that make the syntax more
+familiar, and easier to read.
 
 To compile this, you would use a commandline like this:
 
@@ -140,7 +141,7 @@ $ cpp tdquotes.mac | ./mactool -c -s -t "Typographic Single Quotes" -o tdquotes.
 
 See the [macros
 directory](https://github.com/taviso/wpunix/tree/main/macro/macros) for more
-examples.
+examples, and to see the header files used here.
 
 # Notes
 
