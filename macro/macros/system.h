@@ -75,8 +75,16 @@
 #define STATE_LIST      2048
 #define STATE_NOSHELL   32768
 
+/* The Menu Numbers */
+#define MENU_SPELLER            17
+#define MENU_SPELLER_NOTFOUND   64
+#define MENU_SPELL              32837
+
 /* Test if EditType matches type */
-#define edittype(n) {SYSTEM}EditType~==n
+#define edittype(n) {SYSTEM}EditType~=n
+
+/* Confirm current menu */
+#define activemenu(n) {SYSTEM}Menu~=n
 
 /* Check state flag */
 #define stateset(n) {STATE}&n
