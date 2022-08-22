@@ -35,19 +35,10 @@ If you have a `.wpm` file you want to edit, first do this:
 ```
 $ ./mactool -d -o macro.mac -i macro.wpm
 magic:     FF WPC
-prefixsz:  71
 product:   1
 type:      1
 version:   1.1
-key:       0000
-type:      65531
-count:     4
-blksize:   40
-offset:    0
-type:      1
-length:    15
-offset:    56
-title: Test Macro
+title:     Test Macro
 ```
 
 The `.mac` file is plain text, it can be edited with any tool you like (vim,
