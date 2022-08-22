@@ -1,52 +1,41 @@
 # mactool
 
-This is a small utility to let you edit word perfect macros in a real editor.
-It can decompile existing macros to plain text, then recompile them after
-you've edited them.
+This is a utility to allow you to edit WordPerfect for UNIX macros in a real
+editor.
+
+It can decompile existing macros to plain text, and then recompile them after
+making changes.
+
+This allows you to use standard programming tools to help build and manage your
+macros, such as revision control, preprocessing, diff, patch, grep, and so on.
 
 # Usage
 
 ```
-Usage: ./mactool [-d] [-c] [-t title] [-o outfile] [-i infile]
+WordPerfect macro compiler/decompiler, part of wpunix
+Usage: ./mactool [-d] [-c] [-s] [-t title] [-o outfile] [-i infile]
    -t: Optional macro title.
    -d: Decompile macro to text.
    -c: Compile macro to WPM.
    -o: Output file name.
    -i: Input file name.
+   -s: Strip all spaces (use { } for a literal space).
 
-If no files are specified, stdin and stdout are assumed.
+ - If no files are specified, stdin and stdout are assumed.
+ - Lines beginning with # are discarded to allow use of cpp.
+ - Spaces are *not* ignored by wp, use tabs for indenting or use -s.
+ - Enter a literal '{' with {{}.
 
 ```
 
 ## Decompiling
 
-If you have a .wpm file you want to edit in vim, first do this:
+If you have a `.wpm` file you want to edit, first do this:
 
 ```
-$ ./mactool -d -o macro.txt -i macro.wpm
-```
-
-Now you can edit the macro however you like, vim, emacs, whatever.
-
-> Note: Any non-ASCII characters in macro.txt must be UTF-8.
-
-## Compiling
-
-When you have finished editing, recompile the text into a .wpm file:
-
-```
-$ ./mactool -t "My Cool Macro" -c -o macro.wpm -i macro.txt
-```
-
-If that worked, you can now load it into WordPerfect and verify it looks correct.
-
-## Example
-
-```
-$ ./mactool -d < tdquotes.wpm  > tdquotes.txt
-debug: decompile mode
+$ ./mactool -d -o macro.mac -i macro.wpm
 magic:     FF WPC
-prefixsz:  82
+prefixsz:  71
 product:   1
 type:      1
 version:   1.1
@@ -56,50 +45,101 @@ count:     4
 blksize:   40
 offset:    0
 type:      1
-length:    26
+length:    15
 offset:    56
-title: Typographic Double Quotes
+title: Test Macro
 ```
 
+The `.mac` file is plain text, it can be edited with any tool you like (vim,
+emacs, notepad, anything).
+
+> Note: The file should be encoded as UTF-8.
+
+You can even decompile and edit recorded macros.
+
+## Compiling
+
+When you have finished editing, recompile the text into a .wpm file:
+
 ```
-$ ./mactool -c < tdquotes.txt  > output.wpm
-debug: IF => WP_MACRO, 21
-debug: SYSTEM => WP_MACRO, 53
-debug: ORIGINAL KEY => WP_MACRO, 46
-debug: QUIT => WP_MACRO, 32
-debug: END IF => WP_MACRO, 16
-debug: CASE => WP_MACRO, 7
-debug: KTON => WP_MACRO, 56
-debug: SYSTEM => WP_MACRO, 53
-debug: ; => WP_MACRO, 11
-debug: discovered UCS-4LE 0000201d
-debug: QUIT => WP_MACRO, 32
-debug: ; => WP_MACRO, 11
-debug: LABEL => WP_MACRO, 22
-debug: Backspace => WP_CTRL, 80
-debug: discovered UCS-4LE 0000201c
-debug: QUIT => WP_MACRO, 32
-debug: LABEL => WP_MACRO, 22
-debug: Backspace => WP_CTRL, 80
-debug: discovered UCS-4LE 0000201d
-debug: QUIT => WP_MACRO, 32
-debug: ; => WP_MACRO, 11
-debug: LABEL => WP_MACRO, 22
-debug: discovered UCS-4LE 0000201c
-debug: QUIT => WP_MACRO, 32
+$ ./mactool -t "My Cool Macro" -c -o macro.wpm -i macro.mac
 ```
 
-## Tips
+An optional title can be specified that is displayed by WordPerfect in the editor.
 
-If you have a really complicated macro, you can use cpp to preprocess your macro.
+If that worked, you can now load it into WordPerfect and verify it looks correct.
 
-That means you can use `#include` to split your macro up into multiple files,
-`#ifdef` to enable or disable features, and other preprocess features.
+## Preprocessing
 
-An example commandline would be:
+If you have a really complicated macro, you can use `cpp` to preprocess your
+macro.
 
-`cpp mymacro.mac | ./mactool -s -t "Cool Macro" -c -o mymacro.wpm`
+This allows you to use `#include`, `#ifdef` and `#define` to build complex and
+powerful macros that would have been very difficult with the macro editor alone.
 
-See the macros directory for some examples.
+### Example
+
+If you've spent any time writing macros, you know it can be difficult to get
+the tildes balanced. There are some routines defined in `macro.h` that take
+care of applying all the tildes for you.
+
+Let's take a look.
+
+```cpp
+#include "system.h"
+#include "macro.h"
+#include "utils.h"
+#include "keycodes.h"
+
+#pragma title Typographic Single Quotes
+
+/* If we're not editing a document, do nothing */
+passthru_key_unless(EDIT_DOC)
+
+/* Lookup what character is left of the cursor */
+case (leftchar())
+    match(KEY_SPACE, NewQuote)
+    match(KEY_ENTER, NewQuote)
+    match(KEY_TAB, NewQuote)
+    match(KEY_HPAGE, NewQuote)
+    /* 0x041b ’ */
+    match(1051, CloseQuote)
+    /* 0x0213 ‛ */
+    match(531, OpenQuote)
+endcase
+
+/* Not whitespace; assume we're closing an open quote */
+literal(’)
+quit()
+
+/* Adjacent to an existing quote; toggle it */
+label(OpenQuote)
+    {Backspace}
+    literal(‛)
+    quit()
+
+label(CloseQuote)
+    {Backspace}
+    literal(’)
+    quit()
+
+/* Whitespace; assume we're opening a new quote */
+label(NewQuote)
+    literal(‛)
+    quit()
+```
+
+As you can see, there is not a single tilde in this routine, the cpp macros
+take care of everything.
+
+To compile this, you would use a commandline like this:
+
+```
+$ cpp tdquotes.mac | ./mactool -c -s -t "Typographic Single Quotes" -o tdquotes.wpm
+```
+
+See the [macros
+directory](https://github.com/taviso/wpunix/tree/main/macro/macros) for more
+examples.
 
 

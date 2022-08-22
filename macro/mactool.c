@@ -106,7 +106,7 @@ static int freadmacro(FILE *stream, wpc_t *result)
         result->set = WP_MACRO;
         result->c   = match - &kMacroNames[0];
 
-        fprintf(stderr, "debug: %s => WP_MACRO, %u\n", macro, result->c);
+        //fprintf(stderr, "debug: %s => WP_MACRO, %u\n", macro, result->c);
 
         return 0;
     }
@@ -118,7 +118,7 @@ static int freadmacro(FILE *stream, wpc_t *result)
         result->set = WP_CTRL;
         result->c   = match - &kFunctionKeys[0];
 
-        fprintf(stderr, "debug: %s => WP_CTRL, %u\n", macro, result->c);
+        //fprintf(stderr, "debug: %s => WP_CTRL, %u\n", macro, result->c);
 
         return 0;
     }
@@ -227,7 +227,7 @@ int main(int argc, char **argv)
     }
 
     if (decompile == true) {
-        fprintf(stderr, "debug: decompile mode\n");
+        //fprintf(stderr, "debug: decompile mode\n");
         return decompile_macro(infile, outfile);
     }
 
@@ -320,7 +320,7 @@ int main(int argc, char **argv)
                 }
             } while (insize < MB_LEN_MAX);
 
-            fprintf(stderr, "debug: discovered UCS-4LE %08x\n", ucschar);
+            //fprintf(stderr, "debug: discovered UCS-4LE %08x\n", ucschar);
 
             // Now I need to translate that into a wpc_t.
             if (finducs(ucschar, &wc) != true) {
