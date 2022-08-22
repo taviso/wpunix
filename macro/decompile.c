@@ -22,24 +22,24 @@ int decompile_macro(FILE *infile, FILE *outfile)
                                                 prefix.magic[1],
                                                 prefix.magic[2],
                                                 prefix.magic[3]);
-    fprintf(stderr, "prefixsz:  %u\n", prefix.prefixsz);
+    //fprintf(stderr, "prefixsz:  %u\n", prefix.prefixsz);
     fprintf(stderr, "product:   %u\n", prefix.product);
     fprintf(stderr, "type:      %u\n", prefix.type);
     fprintf(stderr, "version:   %u.%u\n", prefix.ver.major, prefix.ver.minor);
-    fprintf(stderr, "key:       %04x\n", prefix.key);
+    //fprintf(stderr, "key:       %04x\n", prefix.key);
 
     fread(&index, sizeof index, 1, infile);
 
-    fprintf(stderr, "type:      %u\n", index.type);
-    fprintf(stderr, "count:     %u\n", index.count);
-    fprintf(stderr, "blksize:   %u\n", index.blksize);
-    fprintf(stderr, "offset:    %u\n", index.offset);
+    //fprintf(stderr, "type:      %u\n", index.type);
+    //fprintf(stderr, "count:     %u\n", index.count);
+    //fprintf(stderr, "blksize:   %u\n", index.blksize);
+    //fprintf(stderr, "offset:    %u\n", index.offset);
 
     fread(&packet, sizeof packet, 1, infile);
 
-    fprintf(stderr, "type:      %u\n", packet.type);
-    fprintf(stderr, "length:    %u\n", packet.length);
-    fprintf(stderr, "offset:    %u\n", packet.offset);
+    //fprintf(stderr, "type:      %u\n", packet.type);
+    //fprintf(stderr, "length:    %u\n", packet.length);
+    //fprintf(stderr, "offset:    %u\n", packet.offset);
 
     fseek(infile, packet.offset, SEEK_SET);
 
@@ -47,7 +47,7 @@ int decompile_macro(FILE *infile, FILE *outfile)
 
     fread(title, 1, packet.length, infile);
 
-    fprintf(stderr, "title: %s\n", title);
+    fprintf(stderr, "title:     %s\n", title);
 
     free(title);
 
@@ -75,6 +75,8 @@ int decompile_macro(FILE *infile, FILE *outfile)
                     errx(EXIT_FAILURE, "Failed to translate charset %u", c.set);
         }
     }
+
+    printf("\n");
 
     return 0;
 }
