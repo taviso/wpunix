@@ -28,7 +28,8 @@
 #define shellmacro(macroname) {SHELL MACRO}macroname~
 #define shellvariable(shellvar) {SHELL VARIABLE}shellvar~
 #define speed(val) {SPEED}val~
-#define status(message)~ {STATUS PROMPT}message~
+#define status(message) {STATUS PROMPT}message~
+#define statusprompt(message) status(message)
 #define system(sysvar) {SYSTEM}sysvar~
 #define wait(val) {WAIT}val~
 #define while(expr) {WHILE}expr~
