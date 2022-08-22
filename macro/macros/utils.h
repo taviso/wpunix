@@ -3,12 +3,12 @@
 
 /* Specify the only editmode you support */
 #define passthru_key_unless(mode)       \
-    if (!edittype(mode))                \
+    if (!stateset(mode))                \
         {original key}                  \
         {quit}                          \
     fi
 
 /* Get the key code to the left of the cursor, or { } if nothing */
-#define leftchar() kton(system(Left){ })
+#define leftcharnum() kton(leftchar(){ })
 
 #endif

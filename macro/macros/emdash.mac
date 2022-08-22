@@ -8,10 +8,10 @@
 #pragma title Double Dash To Typographic Emdash
 
 /* If we're not editing a document, do nothing */
-passthru_key_unless(EDIT_DOC)
+passthru_key_unless(STATE_NORMAL)
 
 /* Lookup what character is left of the cursor */
-if (leftchar() = KEY_DASH)
+if (leftchar() = CODE_HYPHEN)
     /* This is a second dash, replace it with an emdash */
     {Backspace}
     literal(—)

@@ -7,4 +7,6 @@
 #define KEY_SPACE   32
 #define KEY_DASH    52
 
+#define CODE_HYPHEN     43264
+#define CODE_SOFTHYPHEN 44032
 #endif

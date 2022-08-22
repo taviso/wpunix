@@ -85,48 +85,51 @@ care of applying all the tildes for you.
 
 Let's take a look, this really is a WordPerfect macro!
 
+> Note: This syntax is completely optional, if you really like tildes you can keep using them!
+
 ```cpp
 #include "system.h"
 #include "macro.h"
 #include "utils.h"
 #include "keycodes.h"
 
-#pragma title Typographic Single Quotes
+#pragma title Typographic Double Quotes
 
 /* If we're not editing a document, do nothing */
-passthru_key_unless(EDIT_DOC)
+passthru_key_unless(STATE_NORMAL)
 
 /* Lookup what character is left of the cursor */
 case (leftchar())
-    match(KEY_SPACE, NewQuote)
-    match(KEY_ENTER, NewQuote)
-    match(KEY_TAB, NewQuote)
-    match(KEY_HPAGE, NewQuote)
-    /* 0x041b ’ */
-    match(1051, CloseQuote)
-    /* 0x0213 ‛ */
-    match(531, OpenQuote)
+    match({ },      NewQuote)
+    match({Enter},  NewQuote)
+    match({Tab},    NewQuote)
+    match({Hpg},    NewQuote)
+
+    /* Toggle an existing quote */
+    match(“,        ToggleCloseQuote)
+    match(”,        ToggleOpenQuote)
 endcase
 
 /* Not whitespace; assume we're closing an open quote */
-literal(’)
+literal(”)
 quit()
 
 /* Adjacent to an existing quote; toggle it */
-label(OpenQuote)
+label(ToggleOpenQuote)
     {Backspace}
-    literal(‛)
+    literal(“)
     quit()
 
-label(CloseQuote)
+label(ToggleCloseQuote)
     {Backspace}
-    literal(’)
+    literal(”)
     quit()
 
 /* Whitespace; assume we're opening a new quote */
 label(NewQuote)
-    literal(‛)
+    literal(“)
     quit()
+
 ```
 
 As you can see, there is not a single tilde in this routine, the cpp macros
@@ -156,10 +159,11 @@ Spaces are *not* ignored. That means if you add a space, then WordPerfect will
 literally send a space when executing your macro. This is why the macro editor
 hilights them as `˚`.
 
-This is *probably* not what you intended.
+This is *probably* not what you expected.
 
-The best solution is to use `cpp` and the `-s` option, which takes care of all
-the whitespace for you. If you ever really do need a literal space, use `{ }`.
+The best solution is to use the `-s` option, which will remove all spaces. If
+you ever really do need a literal space, use `{ }`.
 
-If you don't want to use `cpp`, just be careful to use tabs when indenting your
-code. vim users might find the `listchars` feature useful.
+> Note: vim users might find the `listchars` feature useful.
+
+

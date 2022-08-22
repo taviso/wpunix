@@ -8,31 +8,31 @@
 #pragma title Typographic Double Quotes
 
 /* If we're not editing a document, do nothing */
-passthru_key_unless(EDIT_DOC)
+passthru_key_unless(STATE_NORMAL)
 
 /* Lookup what character is left of the cursor */
 case (leftchar())
-    match(KEY_SPACE, NewQuote)
-    match(KEY_ENTER, NewQuote)
-    match(KEY_TAB, NewQuote)
-    match(KEY_HPAGE, NewQuote)
-    /* 0x0420 “ */
-    match(1056, CloseQuote)
-    /* 0x041f ” */
-    match(1055, OpenQuote)
-esac
+    match({ },      NewQuote)
+    match({Enter},  NewQuote)
+    match({Tab},    NewQuote)
+    match({Hpg},    NewQuote)
+
+    /* Toggle an existing quote */
+    match(“,        ToggleCloseQuote)
+    match(”,        ToggleOpenQuote)
+endcase
 
 /* Not whitespace; assume we're closing an open quote */
 literal(”)
 quit()
 
 /* Adjacent to an existing quote; toggle it */
-label(OpenQuote)
+label(ToggleOpenQuote)
     {Backspace}
     literal(“)
     quit()
 
-label(CloseQuote)
+label(ToggleCloseQuote)
     {Backspace}
     literal(”)
     quit()
@@ -41,3 +41,4 @@ label(CloseQuote)
 label(NewQuote)
     literal(“)
     quit()
+
