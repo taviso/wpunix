@@ -8,7 +8,7 @@
         {quit}                          \
     fi
 
-/* Get the key code to the left of the cursor, or {HPg} if nothing */
-#define leftchar() kton(system(Left){HPg})
+/* Get the key code to the left of the cursor, or { } if nothing */
+#define leftchar() kton(system(Left){ })
 
 #endif
