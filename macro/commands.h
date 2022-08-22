@@ -61,6 +61,9 @@ enum {
     MAC_VARIABLE = 52,
     MAC_WAIT = 42,
     MAC_WHILE = 43,
+
+    // Undocumented!
+    MAC_OTHERWISE = 61,
 };
 
 static const char *kMacroNames[UINT8_MAX] = {
@@ -123,6 +126,7 @@ static const char *kMacroNames[UINT8_MAX] = {
     [MAC_VARIABLE] = "VARIABLE",
     [MAC_WAIT] = "WAIT",
     [MAC_WHILE] = "WHILE",
+    [MAC_OTHERWISE] = "OTHERWISE",
 };
 
 static const char *kFunctionKeys[UINT8_MAX] = {
