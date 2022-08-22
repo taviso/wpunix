@@ -31,6 +31,7 @@
 #define status(message) {STATUS PROMPT}message~
 #define statusprompt(message) status(message)
 #define system(sysvar) {SYSTEM}sysvar~
+#define variable(var) {VARIABLE}var~
 #define wait(val) {WAIT}val~
 #define while(expr) {WHILE}expr~
 
@@ -52,6 +53,8 @@
 #define match(c,label) c~label~
 #define go goto
 #define default {OTHERWISE}
+#define declare(var) {ASSIGN}var~~
+#define $(var) {VARIABLE}var~
 
 /* Make it clear explicit characters are intentional */
 #define literal(c) c

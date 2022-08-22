@@ -87,12 +87,20 @@ static int freadmacro(FILE *stream, wpc_t *result)
     }
 
     // Is it a special macro alias?
-    if (strcasecmp(macro, "Enter") == 0)
-        strcpy(macro, "^J");
-    if (strcasecmp(macro, "Tab") == 0)
-        strcpy(macro, "^I");
-    if (strcasecmp(macro, "Compose") == 0)
-        strcpy(macro, "^@");
+    if (strcasecmp(macro, "^J") == 0)
+        strcpy(macro, "Enter");
+    if (strcasecmp(macro, "^I") == 0)
+        strcpy(macro, "Tab");
+    if (strcasecmp(macro, "^Y") == 0)
+        strcpy(macro, "Left");
+    if (strcasecmp(macro, "^X") == 0)
+        strcpy(macro, "Right");
+    if (strcasecmp(macro, "^W") == 0)
+        strcpy(macro, "Up");
+    if (strcasecmp(macro, "^Z") == 0)
+        strcpy(macro, "Down");
+    if (strcasecmp(macro, "^@") == 0)
+        strcpy(macro, "Compose");
 
     // No luck, we have to search for it.
 

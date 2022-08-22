@@ -1,7 +1,6 @@
 # mactool
 
-This is a utility to allow you to edit WordPerfect for UNIX macros in a real
-editor.
+This utility allows you to edit WordPerfect for UNIX macros in a real editor.
 
 It can decompile existing macros to plain text, and then recompile them after
 making changes.
