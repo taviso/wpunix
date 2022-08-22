@@ -142,4 +142,23 @@ See the [macros
 directory](https://github.com/taviso/wpunix/tree/main/macro/macros) for more
 examples.
 
+# Notes
 
+Here are a few things to be aware of when using mactool.
+
+## Whitespace
+
+Tabs are ignored by WordPerfect, use them wherever you like. If you want a
+literal tab in your macro, use `{^I}` or `{Tab}`.
+
+Spaces are *not* ignored. That means if you add a space, then WordPerfect will
+literally send a space when executing your macro. This is why the macro editor
+hilights them as `˚`.
+
+This is *probably* not what you intended.
+
+The best solution is to use `cpp` and the `-s` option, which takes care of all
+the whitespace for you. If you ever really do need a literal space, use `{ }`.
+
+If you don't want to use `cpp`, just be careful to use tabs when indenting your
+code. vim users might find the `listchars` feature useful.
