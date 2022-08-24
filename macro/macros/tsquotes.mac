@@ -11,15 +11,15 @@
 passthru_key_unless(STATE_NORMAL)
 
 /* Lookup what character is left of the cursor */
-case (leftchar())
-    match({ },      NewQuote)
-    match({Enter},  NewQuote)
-    match({Tab},    NewQuote)
-    match({HPg},    NewQuote)
+case (quote(leftchar()))
+    match("", NewQuote)
+    match("{ }", NewQuote)
+    match("{Enter}", NewQuote)
+    match(quote(CODE_TAB), NewQuote)
 
     /* Toggle existing quote */
-    match(’,        ToggleCloseQuote)
-    match(‛,        ToggleOpenQuote)
+    match("‛", ToggleCloseQuote)
+    match("’", ToggleOpenQuote)
 endcase
 
 /* Not whitespace; assume we're closing an open quote */
@@ -27,12 +27,12 @@ literal(’)
 quit()
 
 /* Adjacent to an existing quote; toggle it */
-label(ToggleCloseQuote)
+label(ToggleOpenQuote)
     {Backspace}
     literal(‛)
     quit()
 
-label(ToggleOpenQuote)
+label(ToggleCloseQuote)
     {Backspace}
     literal(’)
     quit()

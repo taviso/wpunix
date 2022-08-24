@@ -230,6 +230,8 @@ static const char *kFunctionKeys[UINT8_MAX] = {
     "Hard Hyphen",
     "Hard Space",
     [107] = "Menu Bar",
+    [109] = "Block Move",
+    [110] = "Block Copy",
 };
 
 #endif

@@ -11,7 +11,7 @@
 passthru_key_unless(STATE_NORMAL)
 
 /* Lookup what character is left of the cursor */
-if (leftchar() = CODE_HYPHEN)
+if (quote(leftchar()) = quote(CODE_HYPHEN))
     /* This is a second dash, replace it with an emdash */
     {Backspace}
     literal(—)

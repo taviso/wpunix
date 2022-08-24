@@ -1,0 +1,35 @@
+/* vim: set ft=cpp: */
+#include "macro.h"
+
+#pragma title WordPerfect Sample Macro
+
+/* Write out the digits 1 to 5 */
+for (i, 1, 5, 1)
+    `The value of i is $(i).`
+    {enter}
+endfor
+
+/* Write out the numbers one to five */
+foreach (i, `one`, `two`, `three`, `four`, `five`)
+    `The value of i is $(i).`
+    {enter}
+endfor
+
+/* Obligatory FizzBuzz */
+for (i, 1, 100, 1)
+    if ($(i) % 3 = 0)
+        `Fizz`
+    endif
+
+    if ($(i) % 5 = 0)
+        `Buzz`
+    endif
+
+    if (($(i) % 3 != 0) & ($(i) % 5 != 0))
+        `$(i)`
+    endif
+
+    {enter}
+endfor
+
+

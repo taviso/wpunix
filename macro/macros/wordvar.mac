@@ -1,0 +1,68 @@
+/* vim: set ft=cpp: */
+
+#include "system.h"
+#include "macro.h"
+#include "utils.h"
+#include "keycodes.h"
+#include "ctype.h"
+
+#pragma title Load Previous Word
+
+declare(word)
+declare(c)
+
+/* Check if this is the start of the document or already has a block */
+if (leftedge() | stateset(STATE_BLOCK))
+    quit()
+endif
+
+/* Use a block as a marker to find our start position */
+{block}
+
+/* Jump to the previous word */
+{word left}
+
+/* Save every character until we're back where we start */
+while (quote(rightchar()) != quote(CODE_RBLOCK))
+    /* Okay, save this character */
+    assign(c, rightchar())
+
+    /* Check for document edge. */
+    if (len(c) = 0)
+        break
+    endif
+
+    /* Now it's safe to move right */
+    {right}
+
+    /* Bug: if the cursor is on [HRt][Block], {right} will skip over the block. */
+    if (quote(leftchar()) = quote(CODE_LBLOCK))
+        break
+    endif
+
+    /* Only save if this was a normal char */
+    if (len(c) != 1)
+        continue
+    endif
+
+    /* Skip any trailing whitespace, is this complete? */
+    if (quote($(c)) = quote({ })
+      | quote($(c)) = quote({^I})
+      | quote($(c)) = quote({^J})
+      | quote($(c)) = quote({^K})
+      | quote($(c)) = quote({^L})
+      | quote($(c)) = quote({^M}))
+        continue
+    endif
+
+    /* seems okay, append to word */
+    append(word, $(c))
+endwhile
+
+/* Clear the block */
+{block}
+
+/* Complete */
+statusprompt((`Prev word was $(word), seems okay`))
+
+quit()

@@ -29,12 +29,13 @@ static void print_usage(char *progname, int exitcode)
     fprintf(stderr, "   -c: Compile macro to WPM.\n");
     fprintf(stderr, "   -o: Output file name.\n");
     fprintf(stderr, "   -i: Input file name.\n");
-    fprintf(stderr, "   -s: Strip all spaces (use { } for a literal space).\n");
+    fprintf(stderr, "   -s: Strip all spaces (use { } for a literal space, or \"foo bar\").\n");
     fprintf(stderr, "\n");
     fprintf(stderr, " - If no files are specified, stdin and stdout are assumed.\n");
     fprintf(stderr, " - Lines beginning with # are discarded to allow use of cpp.\n");
     fprintf(stderr, " - Spaces are *not* ignored by wp, use tabs for indenting or use -s.\n");
-    fprintf(stderr, " - Enter a literal '{' with {{}.\n");
+    fprintf(stderr, " - Enter a literal '{' with {{}, and '`' with {`}\n");
+    fprintf(stderr, " - in strip mode, `strings like this are protected from stipping`\n");
     exit(exitcode);
 }
 
@@ -86,21 +87,34 @@ static int freadmacro(FILE *stream, wpc_t *result)
         }
     }
 
-    // Is it a special macro alias?
-    if (strcasecmp(macro, "^J") == 0)
-        strcpy(macro, "Enter");
-    if (strcasecmp(macro, "^I") == 0)
-        strcpy(macro, "Tab");
-    if (strcasecmp(macro, "^Y") == 0)
-        strcpy(macro, "Left");
-    if (strcasecmp(macro, "^X") == 0)
-        strcpy(macro, "Right");
-    if (strcasecmp(macro, "^W") == 0)
-        strcpy(macro, "Up");
-    if (strcasecmp(macro, "^Z") == 0)
-        strcpy(macro, "Down");
-    if (strcasecmp(macro, "^@") == 0)
-        strcpy(macro, "Compose");
+    // Is it a special merge alias?
+    if (macro[0] == '^') {
+        if (strcasecmp(macro, "^J") == 0)
+            strcpy(macro, "Enter");
+        if (strcasecmp(macro, "^I") == 0)
+            strcpy(macro, "Tab");
+        if (strcasecmp(macro, "^Y") == 0)
+            strcpy(macro, "Left");
+        if (strcasecmp(macro, "^X") == 0)
+            strcpy(macro, "Right");
+        if (strcasecmp(macro, "^W") == 0)
+            strcpy(macro, "Up");
+        if (strcasecmp(macro, "^Z") == 0)
+            strcpy(macro, "Down");
+        if (strcasecmp(macro, "^@") == 0)
+            strcpy(macro, "Compose");
+    }
+
+    // This seems to be specially handled by WP.
+    if (strcasecmp(macro, "GoTo") == 0)
+        strcpy(macro, "Go To");
+
+    // In order to help quotes to appease cpp, we allow {""}, as an
+    // alias for {"}.
+    if (strcmp(macro, "\"\"") == 0)
+        strcpy(macro, "\"");
+    if (strcmp(macro, "''") == 0)
+        strcpy(macro, "'");
 
     // No luck, we have to search for it.
 
@@ -156,6 +170,11 @@ static int freadmacro(FILE *stream, wpc_t *result)
             // These are permitted because they're hard to enter.
             case '{':
             case ' ':
+            case '`':
+            case '"':
+            case '\'':
+            case '*':
+            case '/':
                 result->set = WP_ASCII;
                 result->c   = macro[0];
                 return 0;
@@ -187,12 +206,12 @@ int main(int argc, char **argv)
     bool compile;
     bool decompile;
     bool stripspace;
+    bool inquote;
     iconv_t cd;
     FILE *infile, *outfile;
     int opt;
     int lastc;
     wpc_t wc;
-    int lines;
 
     // Assume stdin if no files specified.
     infile = stdin;
@@ -203,6 +222,7 @@ int main(int argc, char **argv)
 
     // Default settings.
     stripspace = false;
+    inquote = false;
 
     while ((opt = getopt(argc, argv, "so:i:dct:h")) != -1) {
         switch (opt) {
@@ -255,7 +275,6 @@ int main(int argc, char **argv)
 
     // Keep track of the last character seen for state.
     lastc = 0;
-    lines = 1;
 
     while (true) {
         int c = fgetc(infile);
@@ -263,18 +282,20 @@ int main(int argc, char **argv)
         if (c == EOF)
             break;
 
-        // Keep track of line numbers for errors.
-        if (lastc == '\n')
-            lines++;
-
         // Strip spaces if requested.
-        if (c == ' ' && stripspace)
+        if (c == ' ' && stripspace && !inquote)
             continue;
+
+        // Handle quoted strings.
+        if (c == '`' && stripspace) {
+            inquote = !inquote;
+            continue;
+        }
 
         // Everything until the closing '}' is a special name.
         if (c == '{') {
             if (freadmacro(infile, &wc) != 0) {
-                err(EXIT_FAILURE, "Failed to parse a macro name on line %d", lines);
+                err(EXIT_FAILURE, "failed to parse a macro name");
             }
             goto writechar;
         }
@@ -317,14 +338,14 @@ int main(int argc, char **argv)
 
                 // If it failed with anything other than EINVAL, error.
                 if (errno != EINVAL) {
-                    err(EXIT_FAILURE, "iconv() rejected a sequence from the input file, junk on line %d?", lines);
+                    err(EXIT_FAILURE, "iconv() rejected a multibyte sequence from the input file");
                 }
 
                 // Conversion incomplete, read another character.
                 ucsbuf[insize] = fgetc(infile);
 
                 if (ucsbuf[insize++] == EOF) {
-                    err(EXIT_FAILURE, "truncated multibyte sequence? line is %d", lines);
+                    err(EXIT_FAILURE, "possible truncated multibyte sequence found");
                 }
             } while (insize < MB_LEN_MAX);
 
@@ -332,7 +353,7 @@ int main(int argc, char **argv)
 
             // Now I need to translate that into a wpc_t.
             if (finducs(ucschar, &wc) != true) {
-                err(EXIT_FAILURE, "unable to translate char into wordperfect character, line %u", lines);
+                err(EXIT_FAILURE, "unable to translate char into wordperfect character");
             }
         }
 

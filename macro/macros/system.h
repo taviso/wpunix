@@ -91,5 +91,6 @@
 
 /* Get the char to the left of the cursor */
 #define leftchar() system(SYS_LEFT)
+#define rightchar() system(SYS_RIGHT)
 
 #endif
