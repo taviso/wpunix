@@ -1,0 +1,32 @@
+/* vim: set ft=cpp: */
+
+#include "system.h"
+#include "macro.h"
+#include "utils.h"
+#include "keycodes.h"
+
+#pragma title Periods to Ellipsis
+
+/* If we're not editing a document, do nothing */
+passthru_key_unless(STATE_NORMAL)
+
+/* Lookup what character is left of the cursor */
+if (quote(leftchar()) = quote(.))
+    /* it is a period, skip left */
+    {left}
+
+    /* Now see whats there */
+    if (quote(leftchar()) = quote(.))
+        /* This is a third period, replace it with an ellipsis */
+        {backspace}
+        {del}
+        `…`
+        quit()
+    endif
+
+    /* not a period, move back where we started */
+    {right}
+endif
+
+/* No existing periods */
+{original key}

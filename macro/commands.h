@@ -211,7 +211,7 @@ static const char *kFunctionKeys[UINT8_MAX] = {
     "Ctrl-F11",
     "Ctrl-F12",
     "Backspace",
-    "Delete Right",
+    "Del",
     "Delete Word",
     "Word Right",
     "Word Left",
