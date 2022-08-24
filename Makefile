@@ -9,11 +9,11 @@ all: wordperfect8_i386.deb
 	dpkg-deb --build --root-owner-group $^
 	@ls -l $@
 
-wordperfect8_i386: libcompat.so libwppatch.so
-	bash build8.sh $@
+macro/mactool:
+	make -C macro
 
-wordperfect7_i386: libcompat.so libwppatch.so
-	bash build7.sh $@
+wordperfect8_i386: libcompat.so libwppatch.so | macro/mactool
+	bash build8.sh $@
 
 libcompat.so: compat.o
 	ld -m elf_i386 -shared -o $@ $<
@@ -30,3 +30,4 @@ clean:
 	rm -rf build wordperfect?_i386
 	rm -rf lib
 	make -C intercept clean
+	make -C macro clean
