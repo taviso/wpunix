@@ -11,6 +11,7 @@ build
 .wprc
 .*.sw?
 *.o
+*.a
 *.so
 reference
 symbols
