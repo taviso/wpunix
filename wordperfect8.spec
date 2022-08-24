@@ -1,10 +1,11 @@
 Name:           wordperfect8
-Version:        0.07
+Version:        0.08
 Release:        1%{?dist}
 Summary:        WordPerfect for UNIX (TM) Character Terminals
 License:        Abandonware
 URL:            https://github.com/taviso/wpunix
-Source0:        https://github.com/taviso/wpunix/archive/refs/tags/v%{version}.tar.gz
+Source0:        https://github.com/taviso/wpunix/archive/refs/heads/main.tar.gz
+#Source0:       https://github.com/taviso/wpunix/archive/refs/tags/v%{version}.tar.gz
 Source1:        https://archive.download.redhat.com/pub/redhat/linux/7.2/en/os/i386/RedHat/RPMS/libc-5.3.12-27.i386.rpm
 Source2:        https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/glibc-2.0.7-29.i386.rpm
 Source3:        https://archive.org/download/corel-wpunix-8/COREL_WPUNIX_1.iso

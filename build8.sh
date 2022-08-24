@@ -151,9 +151,6 @@ cp -f ../xterm-nomouse.trs root/shlib10/xterm-nomouse.trs
 # Add some sample macros.
 cp -f ../macro/macros/*.wpm root/wpmacros/
 
-# Add extra utility programs.
-install -D --mode=0755 ../macro/mactool root/shbin10/mactool
-
 # Ghostscript Printer Resources
 cp -f ../gscript.all root/shlib10/gscript.all
 
@@ -204,6 +201,9 @@ mv lib root
 
 # Normalize those permissions
 chmod -R 0755 root/lib
+
+# Add any extra utility programs.
+install -D --mode=0755 ../macro/mactool root/shbin10/mactool
 
 # Install into prefix
 mv root/* "${topdir}/${pkgname}/${prefix}/"
