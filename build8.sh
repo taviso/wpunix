@@ -205,6 +205,10 @@ chmod -R 0755 root/lib
 # Add any extra utility programs.
 install -D --mode=0755 ../macro/mactool root/shbin10/mactool
 
+# Remove any debugging symbols from our code.
+strip root/shbin10/mactool
+strip root/lib/libwppatch.so
+
 # Install into prefix
 mv root/* "${topdir}/${pkgname}/${prefix}/"
 
