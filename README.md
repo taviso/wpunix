@@ -9,8 +9,8 @@ information and a quick introduction on the
 [FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and
 problems.
 
-It features print previews, an equation editor, mouse support, drop down menus
-and more.
+It features print previews, an equation editor, mouse support, drop down menus,
+builtin macro editor and more.
 
 ![Print Previews](https://user-images.githubusercontent.com/123814/186571054-af88f26c-850a-4d88-94b3-02482d15e039.gif)
 
