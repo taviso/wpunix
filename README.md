@@ -52,13 +52,9 @@ The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
 
 ![Screenshot](/doc/wpscreenshot-layout.png?raw=true "Layout")
 
-It uses [Sixels](https://en.wikipedia.org/wiki/Sixel) to generate print previews in the terminal!
+It can use [Sixels](https://en.wikipedia.org/wiki/Sixel) to generate print previews in the terminal, and has optional mouse support.
 
-![Screenshot](/doc/wpscreenshot-sixels.png?raw=true "Print Preview")
-
-The built-in macro editor.
-
-![image](https://user-images.githubusercontent.com/123814/179529235-98f10f47-ad77-443e-8c54-b1b5139b585e.png)
+![Print Previews](https://user-images.githubusercontent.com/123814/186571054-af88f26c-850a-4d88-94b3-02482d15e039.gif)
 
 There is a interactive equation editor, it can use sixels or ascii art.
 
