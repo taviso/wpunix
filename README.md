@@ -9,6 +9,11 @@ information and a quick introduction on the
 [FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and
 problems.
 
+It features print previews, an equation editor, mouse support, drop down menus,
+builtin macro editor and more.
+
+![Print Previews](https://user-images.githubusercontent.com/123814/186571054-af88f26c-850a-4d88-94b3-02482d15e039.gif)
+
 ## Building
 
 > Note: If you just want a `deb` or `rpm` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
@@ -52,15 +57,7 @@ The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
 
 ![Screenshot](/doc/wpscreenshot-layout.png?raw=true "Layout")
 
-It uses [Sixels](https://en.wikipedia.org/wiki/Sixel) to generate print previews in the terminal!
-
-![Screenshot](/doc/wpscreenshot-sixels.png?raw=true "Print Preview")
-
-The built-in macro editor.
-
-![image](https://user-images.githubusercontent.com/123814/179529235-98f10f47-ad77-443e-8c54-b1b5139b585e.png)
-
-There is a interactive equation editor, it can use sixels or ascii art.
+There is a interactive equation editor, it can use [Sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
 
 ![image](https://user-images.githubusercontent.com/123814/184558891-d9503147-5b8d-49c8-930b-3c1ac010aecb.png)
 
