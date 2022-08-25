@@ -10,7 +10,7 @@ information and a quick introduction on the
 problems.
 
 It features print previews, an equation editor, mouse support, drop down menus,
-builtin macro editor and more.
+spelling and grammar checking, builtin macro editor and more.
 
 ![Print Previews](https://user-images.githubusercontent.com/123814/186571054-af88f26c-850a-4d88-94b3-02482d15e039.gif)
 
@@ -42,10 +42,14 @@ The following packages are required to build the WordPerfect patches.
 Run `wp` to start WordPerfect. The default keybinding to open the menu is
 <kbd>Esc</kbd>+<kbd>=</kbd>.
 
-There is a full manual available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
+There is a quick start guide on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started).
+
+The complete user manual is available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
 
 There is also a huge amount of useful information that is *mostly* relevant to
 wpunix on the [wpdos](http://www.columbia.edu/~em36/wpdos/unix.html) site.
+
+> Note: Print previews require a terminal with sixel support, such as [XTerm](https://invisible-island.net/xterm/).
 
 ## Screenshots
 
