@@ -1,5 +1,5 @@
 Name:           wordperfect8
-Version:        0.08
+Version:        0.09
 Release:        1%{?dist}
 Summary:        WordPerfect for UNIX (TM) Character Terminals
 License:        Abandonware
