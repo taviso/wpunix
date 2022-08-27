@@ -16,3 +16,6 @@ build
 reference
 symbols
 stabs
+*.cmarkers
+*.names
+*.EXE

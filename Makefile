@@ -12,7 +12,10 @@ all: wordperfect8_i386.deb
 macro/mactool:
 	make -C macro
 
-wordperfect8_i386: libcompat.so libwppatch.so | macro/mactool
+util/grsutil:
+	make -C util
+
+wordperfect8_i386: libcompat.so libwppatch.so | macro/mactool util/grsutil
 	bash build8.sh $@
 
 libcompat.so: compat.o
@@ -31,3 +34,4 @@ clean:
 	rm -rf lib
 	make -C intercept clean
 	make -C macro clean
+	make -C util clean

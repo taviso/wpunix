@@ -1,10 +1,10 @@
 #ifndef __UTILS_H
 #define __UTILS_H
 
-/* Specify the only editmode you support */
-#define passthru_key_unless(mode)       \
+/* Specify the only state flags you support */
+#define require(mode, ...)              \
     if (!stateset(mode))                \
-        {original key}                  \
+        __VA_ARGS__                     \
         {quit}                          \
     fi
 

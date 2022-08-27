@@ -204,9 +204,11 @@ chmod -R 0755 root/lib
 
 # Add any extra utility programs.
 install -D --mode=0755 ../macro/mactool root/shbin10/mactool
+install -D --mode=0755 ../util/grsutil root/shbin10/grsutil
 
 # Remove any debugging symbols from our code.
 strip root/shbin10/mactool
+strip root/shbin10/grsutil
 strip root/lib/libwppatch.so
 
 # Install into prefix
