@@ -232,6 +232,7 @@ static const char *kFunctionKeys[UINT8_MAX] = {
     [107] = "Menu Bar",
     [109] = "Block Move",
     [110] = "Block Copy",
+    [125] = "Mouse Event",
 };
 
 #endif

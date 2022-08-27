@@ -8,7 +8,7 @@
 #pragma title Periods to Ellipsis
 
 /* If we're not editing a document, do nothing */
-passthru_key_unless(STATE_NORMAL)
+require(STATE_NORMAL, {original key})
 
 /* Lookup what character is left of the cursor */
 if (quote(leftchar()) = quote(.))
