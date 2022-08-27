@@ -36,6 +36,7 @@ The following packages are required to build the WordPerfect patches.
 | gcc-multilib        | libgcc.i686         |
 | bsdtar              | bsdtar              |
 | patchelf            | patchelf            |
+| rpm2cpio            | rpm                 |
 
 ## Getting Started
 
