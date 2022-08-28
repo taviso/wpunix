@@ -62,7 +62,7 @@ The default look.
 
 There are interactive equation and graphics editors, they can use [sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
 
-![equation](https://user-images.githubusercontent.com/123814/187082718-a8ddc90a-c239-40e9-9113-9538d889c091.gif)
+![equation](https://user-images.githubusercontent.com/123814/187083922-d1c38e75-734d-4161-853c-407ec38bc9d4.gif)
 
 The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
 
