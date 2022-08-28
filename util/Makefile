@@ -1,4 +1,5 @@
 .PHONY: clean
+LDFLAGS=-static
 
 all: grsutil
 
