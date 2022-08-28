@@ -66,7 +66,7 @@ The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
 
 There is a interactive equation editor, it can use [Sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
 
-![image](https://user-images.githubusercontent.com/123814/184558891-d9503147-5b8d-49c8-930b-3c1ac010aecb.png)
+![equation](https://user-images.githubusercontent.com/123814/187059746-bff9971e-8810-4425-ad44-9c73d25c448c.gif)
 
 ## Licensing
 
