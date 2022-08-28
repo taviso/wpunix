@@ -94,10 +94,14 @@ ln -sf ../shared linux/
 
 # These are only needed during install.
 # This loader is too old to support DT_RPATH :)
-patchelf --set-interpreter "${topdir}/build/lib/ld-linux.so.2" linux/ins/wpdecom linux/ins/wxar
-patchelf --add-needed "${topdir}/build/lib/libcompat.so" linux/ins/wpdecom linux/ins/wxar
-patchelf --replace-needed "libm.so.5" "${topdir}/build/lib/libm.so.5" linux/ins/wpdecom linux/ins/wxar
-patchelf --replace-needed "libc.so.5" "${topdir}/build/lib/libc.so.5" linux/ins/wpdecom linux/ins/wxar
+patchelf --set-interpreter "${topdir}/build/lib/ld-linux.so.2" linux/ins/wpdecom
+patchelf --set-interpreter "${topdir}/build/lib/ld-linux.so.2" linux/ins/wxar
+patchelf --add-needed "${topdir}/build/lib/libcompat.so" linux/ins/wpdecom
+patchelf --add-needed "${topdir}/build/lib/libcompat.so" linux/ins/wxar
+patchelf --replace-needed "libm.so.5" "${topdir}/build/lib/libm.so.5" linux/ins/wpdecom
+patchelf --replace-needed "libm.so.5" "${topdir}/build/lib/libm.so.5" linux/ins/wxar
+patchelf --replace-needed "libc.so.5" "${topdir}/build/lib/libc.so.5" linux/ins/wpdecom
+patchelf --replace-needed "libc.so.5" "${topdir}/build/lib/libc.so.5" linux/ins/wxar
 chmod +x linux/ins/wxar linux/ins/wpdecom
 
 # wxar works in the pwd, so this wrapper makes a tempdir.
