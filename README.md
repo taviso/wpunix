@@ -60,13 +60,13 @@ The default look.
 
 ![image](https://user-images.githubusercontent.com/123814/179531850-7ed44cf6-2d7d-4d8c-960b-6086870bb4d4.png)
 
+There are interactive equation and graphics editor, it can use [sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
+
+![equation](https://user-images.githubusercontent.com/123814/187082718-a8ddc90a-c239-40e9-9113-9538d889c091.gif)
+
 The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
 
 ![Screenshot](/doc/wpscreenshot-layout.png?raw=true "Layout")
-
-There is a interactive equation editor, it can use [Sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
-
-![equation](https://user-images.githubusercontent.com/123814/187059746-bff9971e-8810-4425-ad44-9c73d25c448c.gif)
 
 ## Licensing
 
