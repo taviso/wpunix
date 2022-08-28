@@ -30,13 +30,15 @@ $ md5sum COREL_WPUNIX_1.iso
 
 The following packages are required to build the WordPerfect patches.
 
-| Ubuntu              | Fedora              |
-| ------------------- | ------------------- |
-| build-essential     | glibc-devel.i686    |
-| gcc-multilib        | libgcc.i686         |
-| bsdtar              | bsdtar              |
-| patchelf            | patchelf            |
-| rpm2cpio            | rpm                 |
+| Ubuntu / Debian           | Fedora              |
+| --------------------------|---------------------|
+| build-essential           | glibc-devel.i686    |
+| gcc-multilib              | libgcc.i686         |
+| bsdtar / libarchive-tools | bsdtar              |
+| patchelf                  | patchelf            |
+| rpm2cpio                  | glibc-static        |
+|                           | glibc-static.i686   |
+
 
 ## Getting Started
 
