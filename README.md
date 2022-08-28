@@ -60,7 +60,7 @@ The default look.
 
 ![image](https://user-images.githubusercontent.com/123814/187082851-731af626-3cf1-44ac-874b-517c8ff545e6.png)
 
-There are interactive equation and graphics editor, it can use [sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
+There are interactive equation and graphics editors, they can use [sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
 
 ![equation](https://user-images.githubusercontent.com/123814/187082718-a8ddc90a-c239-40e9-9113-9538d889c091.gif)
 
