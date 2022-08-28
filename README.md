@@ -58,7 +58,7 @@ wpunix on the [wpdos](http://www.columbia.edu/~em36/wpdos/unix.html) site.
 
 The default look.
 
-![image](https://user-images.githubusercontent.com/123814/179531850-7ed44cf6-2d7d-4d8c-960b-6086870bb4d4.png)
+![image](https://user-images.githubusercontent.com/123814/187082851-731af626-3cf1-44ac-874b-517c8ff545e6.png)
 
 There are interactive equation and graphics editor, it can use [sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
 
