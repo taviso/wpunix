@@ -58,15 +58,15 @@ wpunix on the [wpdos](http://www.columbia.edu/~em36/wpdos/unix.html) site.
 
 The default look.
 
-![image](https://user-images.githubusercontent.com/123814/179531850-7ed44cf6-2d7d-4d8c-960b-6086870bb4d4.png)
+![image](https://user-images.githubusercontent.com/123814/187082851-731af626-3cf1-44ac-874b-517c8ff545e6.png)
+
+There are interactive equation and graphics editors, they can use [sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
+
+![equation](https://user-images.githubusercontent.com/123814/187083922-d1c38e75-734d-4161-853c-407ec38bc9d4.gif)
 
 The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
 
 ![Screenshot](/doc/wpscreenshot-layout.png?raw=true "Layout")
-
-There is a interactive equation editor, it can use [Sixels](https://en.wikipedia.org/wiki/Sixel) or ascii art.
-
-![image](https://user-images.githubusercontent.com/123814/184558891-d9503147-5b8d-49c8-930b-3c1ac010aecb.png)
 
 ## Licensing
 
