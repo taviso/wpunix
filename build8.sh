@@ -155,6 +155,10 @@ cp -f ../xterm-nomouse.trs root/shlib10/xterm-nomouse.trs
 # Add some sample macros.
 cp -f ../macro/macros/*.wpm root/wpmacros/
 
+# Add macro include files.
+mkdir --mode=0755 root/wpmacros/include
+cp -f ../macro/macros/*.h root/wpmacros/include/
+
 # Ghostscript Printer Resources
 cp -f ../gscript.all root/shlib10/gscript.all
 
