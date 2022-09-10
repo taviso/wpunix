@@ -1,0 +1,110 @@
+/* vim: set ft=cpp: */
+
+#include "system.h"
+#include "macro.h"
+#include "utils.h"
+#include "keycodes.h"
+#include "prompt.h"
+
+#pragma title Sample Menu Macro
+
+// The default selected menu option.
+assign(option, 0)
+
+// Draw all the menu options.
+function(drawmenu,
+    // Choose Menu position
+    assign(xpos, 5)
+    assign(ypos, 5)
+    assign(width, 60)
+    assign(entry, -1)
+
+    // Most drawing and positioning commands only work inside prompt().
+    prompt(
+        clrscreen()
+        attrclr()
+        boxtop($(xpos), $(ypos), $(width))
+    )
+
+    // Move to the next line.
+    $inc(ypos)
+
+    // Draw a header.
+    prompt(boxtxt($(xpos),
+                  $(ypos),
+                  $(width),
+                  bold(`Please Select an Option...`)))
+
+    // Draw the menu entries.
+    foreach(msg,
+        `This is an option`,
+        `This is another option`,
+        `This is a third option`,
+        `I can keep doing this`,
+        `Every option is added to the list`)
+
+        // Move to the next line.
+        $inc(ypos) $inc(entry)
+
+        // If this option is active, highlight it.
+        if ($(option) = $(entry))
+            // This draws the option in reverse video.
+            prompt(boxsel($(xpos), $(ypos), $(width), $(msg)))
+        else
+            prompt(boxtxt($(xpos), $(ypos), $(width), $(msg)))
+        endif
+    endfor
+
+    // Draw the bottom of the menu box.
+    $inc(ypos)
+    prompt(boxbot($(xpos), $(ypos), $(width)))
+
+    // Move the cursor out of the way.
+    prompt(curshome())
+
+    // If we never found an active entry, scroll around to top.
+    if ($(option) < 0 or $(option) > $(entry))
+        assign(option, 0)
+        call(drawmenu)
+    endif
+)
+
+// Choose the next option above.
+function(menuup,
+    $dec(option)
+    call(drawmenu)
+)
+
+// Choose the next option down.
+function(menudown,
+    $inc(option)
+    call(drawmenu)
+)
+
+// Choose the hilighted option.
+function(menuquit,
+    // Remove any menu junk left on the screen.
+    prompt(clrscreen())
+
+    // Do something with the result.
+    status(`You selected $(option)`)
+
+    // All done.
+    quit()
+)
+
+// Draw the base menu.
+call(drawmenu)
+
+// Wait for a key press.
+while (true)
+    look(key)
+
+    // Dispatch the read key to a handler.
+    casecall ($(key))
+        match({up}, menuup)
+        match({down}, menudown)
+        match({enter}, menuquit)
+    endcase
+endwhile
+

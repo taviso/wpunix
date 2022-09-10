@@ -104,6 +104,15 @@ static int freadmacro(FILE *stream, wpc_t *result)
         if (strcasecmp(macro, "^@") == 0)
             strcpy(macro, "Compose");
     }
+    // And the inverse of that.
+    if (strcasecmp(macro, "Esc") == 0)
+        strcpy(macro, "^[");
+    if (strcasecmp(macro, "Del to EOP") == 0)
+        strcpy(macro, "^L");
+    if (strcasecmp(macro, "Del to EOL") == 0)
+        strcpy(macro, "^K");
+    if (strcasecmp(macro, "Home") == 0)
+        strcpy(macro, "^H");
 
     // This seems to be specially handled by WP.
     if (strcasecmp(macro, "GoTo") == 0)
@@ -179,6 +188,10 @@ static int freadmacro(FILE *stream, wpc_t *result)
                 result->c   = macro[0];
                 return 0;
         }
+    }
+
+    if (sscanf(macro, "C %hhu,%hhu", &result->set, &result->c) == 2) {
+        return 0;
     }
 
     errx(EXIT_FAILURE, "The macro name %s is not recognized.", macro);

@@ -325,6 +325,10 @@ int fputwpc(wpc_t wpc, FILE *stream)
         return fputc(wpc.c, stream);
     }
 
+    if (wpc.set >= WP_NUMSETS || !charsets[wpc.set].data) {
+        return fprintf(stream, "{C %d,%d}", wpc.set, wpc.c);
+    }
+
     cd = iconv_open("UTF-8", "UCS-4LE");
 
     if (cd == (iconv_t) -1) {

@@ -20,7 +20,9 @@
 
 /* Wrappers to handle tildes automatically for you */
 #define assign(var,expr) {ASSIGN}_(var)~_(expr)~
-#define call(label) {CALL}_(label)~
+
+/* Optionally also allows a parameter */
+#define call(label, ...) assign(_fparam, __VA_ARGS__) {CALL}_(label)~
 #define case(expr) {CASE}_(expr)~
 #define casecall(expr) {CASE CALL}_(expr)~
 #define chain(macroname) {CHAIN}_(macroname)~
@@ -39,7 +41,8 @@
 #define oncancel(action) {ON CANCEL}_(action)~
 #define onerror(action) {ON ERROR}_(action)~
 #define onnotfound(action) {ON NOT FOUND}_(action)~
-#define pause(key) {PAUSE KEY}_(key)~
+#define pausekey(key) {PAUSE KEY}_(key)~
+#define pause() {PAUSE}
 #define prompt(message) {PROMPT}_(message)~
 #define shellassign(shellvar,expr) {SHELL ASSIGN}_(shellvar)~_(expr)~
 #define shellmacro(macroname) {SHELL MACRO}_(macroname)~
@@ -71,11 +74,29 @@
 #define default {OTHERWISE}
 #define declare(var) {ASSIGN}_(var)~~
 #define continue {NEXT}
+#define true 1
+#define false 0
+#define or |
+#define and &
+
+#define function(name, cmds)    \
+    goto(_endfunc_ ## name)     \
+    label(_(name))              \
+    _(cmds)                     \
+    return                      \
+    label(_endfunc_ ## name)
 
 #define $len(var) {LEN}_(var)~
 #define len(var) {LEN}_(var)~
 #define $(var) {VARIABLE}_(var)~
 #define $$(var) $(var)
+#define $_arg $(_fparam)
+
+#define $add(var,n) assign(_(var), $(_(var)) + _(n))
+#define $sub(var,n) $add(_(var), - _(n))
+
+#define $inc(var) $add(_(var), 1)
+#define $dec(var) $sub(_(var), 1)
 
 /* Make it clear explicit characters are intentional */
 #define literal(str...) str
