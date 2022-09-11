@@ -18,11 +18,11 @@
 /* Yeesh, I need a second step to avoid spaces which matter in `foo: $(bar)` */
 #define _(q) _EVALUATING_PASTE(,__(q))
 
+/* Optionally also allows a parameter */
+#define call(label, ...) __VA_OPT__(push(__VA_ARGS__)) {CALL}_(label)~
+
 /* Wrappers to handle tildes automatically for you */
 #define assign(var,expr) {ASSIGN}_(var)~_(expr)~
-
-/* Optionally also allows a parameter */
-#define call(label, ...) assign(_fparam, __VA_ARGS__) {CALL}_(label)~
 #define case(expr) {CASE}_(expr)~
 #define casecall(expr) {CASE CALL}_(expr)~
 #define chain(macroname) {CHAIN}_(macroname)~
@@ -56,7 +56,6 @@
 #define while(expr) {WHILE}_(expr)~
 
 #define quit() {QUIT}
-#define return {RETURN}
 
 #define bell() {BELL}
 #define break {BREAK}
@@ -83,7 +82,7 @@
     goto(_endfunc_ ## name)     \
     label(_(name))              \
     _(cmds)                     \
-    return                      \
+    return(0)                   \
     label(_endfunc_ ## name)
 
 #define $len(var) {LEN}_(var)~
@@ -119,5 +118,8 @@
 #define _foreach(x, y) __foreach(x, y)
 #define __foreach(x, y) x ## y
 #define foreach(args...) {FOR EACH}_foreach(_T, _COUNT(args)(args))~~
+
+// Stack support for functions
+#include "stack.h"
 
 #endif

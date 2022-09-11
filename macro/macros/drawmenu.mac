@@ -1,7 +1,7 @@
 /* vim: set ft=cpp: */
 
-#include "system.h"
 #include "macro.h"
+#include "system.h"
 #include "utils.h"
 #include "keycodes.h"
 #include "prompt.h"
