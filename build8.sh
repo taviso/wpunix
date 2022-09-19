@@ -121,6 +121,34 @@ function wxar()
     rm -rf "${tmpdir}"
 }
 
+# Change function to return specified value.
+# This is needed because the converter binaries have expired.
+function patchfunc()
+{
+    local val=(0xc390c031 0xc340c031)
+
+    if ! test -f "${1}"; then
+        return
+    fi
+
+    if ! nm "${1}" | grep -aF "T ${2}"; then
+        return
+    fi
+
+    # If this fails, that converters wont work, but it's a relatively harmless
+    # error.
+    if ! type gdb; then
+        return
+    fi
+
+    # If this fails then we may have broken the converters!
+    gdb --nx                                    \
+        --write                                 \
+        --batch-silent                          \
+        -ex "set * (int *) ${2} = ${val[$3]}"   \
+        "${1}"
+}
+
 # Remove leftover rockridge junk
 find -name YMTRANS.TBL -delete
 
@@ -209,6 +237,12 @@ mv lib root
 
 # Normalize those permissions
 chmod -R 0755 root/lib
+
+# Fix any expired converter programs.
+for i in root/shbin10/fxwpf root/shbin10/in* root/shbin10/out*; do
+    patchfunc "${i}" CheckTime 1
+    patchfunc "${i}" SecureInFile 0
+done
 
 # Add any extra utility programs.
 install -D --mode=0755 ../macro/mactool root/shbin10/mactool
