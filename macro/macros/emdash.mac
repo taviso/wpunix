@@ -13,8 +13,12 @@ require(STATE_NORMAL, {original key})
 /* Lookup what character is left of the cursor */
 if (quote(leftchar()) = quote(CODE_HYPHEN))
     /* This is a second dash, replace it with an emdash */
-    {Backspace}
+    {backspace}
     literal(—)
+
+    /* Insert an invisible soft return, this indicates wp can use this as a hyphen. */
+    {home}{home}{enter}
+
     quit()
 fi
 
