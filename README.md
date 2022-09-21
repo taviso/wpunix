@@ -64,9 +64,9 @@ There are interactive equation and graphics editors, they can use [sixels](https
 
 ![equation](https://user-images.githubusercontent.com/123814/187083922-d1c38e75-734d-4161-853c-407ec38bc9d4.gif)
 
-The classic "[Reveal Codes](https://wptoolbox.com/tips/RevealCodes.html)" view.
+There are built-in spelling and grammar checking tools, and a comprehensive interactive thesaurus.
 
-![Screenshot](/doc/wpscreenshot-layout.png?raw=true "Layout")
+![thesaurus](https://user-images.githubusercontent.com/123814/188775253-78742e7d-269f-4916-b493-411c5c208b33.gif)
 
 ## Licensing
 
