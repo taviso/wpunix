@@ -51,6 +51,7 @@
 #define status(message) {STATUS PROMPT}_(message)~
 #define statusprompt(message) status(message)
 #define system(sysvar) {SYSTEM}_(sysvar)~
+#define text(var,message) {TEXT}_(var)~_(message)~
 #define variable(var) {VARIABLE}_(var)~
 #define wait(val) {WAIT}_(val)~
 #define while(expr) {WHILE}_(expr)~
@@ -73,8 +74,8 @@
 #define default {OTHERWISE}
 #define declare(var) {ASSIGN}_(var)~~
 #define continue {NEXT}
-#define true 1
-#define false 0
+#define $true 1
+#define $false 0
 #define or |
 #define and &
 

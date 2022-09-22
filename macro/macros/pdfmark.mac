@@ -5,8 +5,9 @@
 #include "utils.h"
 #include "keycodes.h"
 #include "prompt.h"
+#include "printer.h"
 
-#pragma title Sample Menu Macro
+#pragma title Manage Pdfmark Annotations
 
 // The default selected menu option.
 assign(option, 0)
@@ -37,11 +38,9 @@ function(drawmenu,
 
     // Draw the menu entries.
     foreach(msg,
-        `This is an option`,
-        `This is another option`,
-        `This is a third option`,
-        `I can keep doing this`,
-        `Every option is added to the list`)
+        `Name the current location`,
+        `Link to a named location`,
+        `Add a PDF annotation`)
 
         // Move to the next line.
         $inc(ypos) $inc(entry)
@@ -81,13 +80,43 @@ function(menudown,
     call(drawmenu)
 )
 
+function(namelocation,
+
+    text(destname, `Enter name of location (e.g. MyLocation): `)
+
+    /* Insert a Printer Command */
+    postscript(`_DU [ /Dest /$(destname) /View [/XYZ DUx DUy 0] /DEST pdfmark`)
+)
+
+function(createlink,
+    text(destname, `Enter name of location (e.g. MyLocation): `)
+    text(linktext, (`Enter link to display (e.g. page 2) `))
+
+    postscript(`gsave ($(linktext)) true charpath flattenpath `
+               `[ /Rect [ pathbbox ] /Dest /$(destname) /Subtype /Link /ANN pdfmark `
+               `grestore`
+    )
+
+    $(linktext)
+)
+
+function(addcomment,
+    text(comment, `Enter Comment: `)
+
+    postscript(`[ /Contents ($(comment)) /Rect [ currentpoint currentpoint ] /ANN pdfmark `)
+)
+
 // Choose the hilighted option.
 function(menuquit,
     // Remove any menu junk left on the screen.
     prompt(clrscreen())
 
-    // Do something with the result.
-    status(`You selected $(option)`)
+    // Dispatch result.
+    casecall ($(option))
+        match(0, namelocation)
+        match(1, createlink)
+        match(2, addcomment)
+    endcase
 
     // All done.
     quit()
@@ -107,4 +136,3 @@ while ($true)
         match({enter}, menuquit)
     endcase
 endwhile
-
