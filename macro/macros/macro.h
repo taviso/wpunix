@@ -76,8 +76,9 @@
 #define continue {NEXT}
 #define $true 1
 #define $false 0
-#define or |
-#define and &
+#define $or |
+#define $and &
+#define $eq =
 
 #define function(name, cmds)    \
     goto(_endfunc_ ## name)     \

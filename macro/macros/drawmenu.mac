@@ -12,11 +12,14 @@
 assign(option, 0)
 
 // Draw all the menu options.
+// Syntax: call(drawmenu, xpos, ypos, width)
 function(drawmenu,
     // Choose Menu position
-    assign(xpos, 5)
-    assign(ypos, 5)
-    assign(width, 60)
+    $pop(width)
+    $pop(ypos)
+    $pop(xpos)
+
+    // Select the current entry.
     assign(entry, -1)
 
     // Most drawing and positioning commands only work inside prompt().
@@ -62,23 +65,23 @@ function(drawmenu,
     // Move the cursor out of the way.
     prompt(curshome())
 
-    // If we never found an active entry, scroll around to top.
-    if ($(option) < 0 or $(option) > $(entry))
+    // If we never found an active entry, scroll around to top and try again.
+    if ($(option) < 0 $or $(option) > $(entry))
         assign(option, 0)
-        call(drawmenu)
+        call(drawmenu, $(xpos), $(ypos) - $(entry) - 3, $(width))
     endif
 )
 
 // Choose the next option above.
 function(menuup,
     $dec(option)
-    call(drawmenu)
+    call(drawmenu, 5, 5, 60)
 )
 
 // Choose the next option down.
 function(menudown,
     $inc(option)
-    call(drawmenu)
+    call(drawmenu, 5, 5, 60)
 )
 
 // Choose the hilighted option.
@@ -94,11 +97,13 @@ function(menuquit,
 )
 
 // Draw the base menu.
-call(drawmenu)
+call(drawmenu, 5, 5, 60)
 
 // Wait for a key press.
 while ($true)
-    look(key)
+    // If you use look(), the menu will constantly poll for input.
+    // char() will block and wait for a key.
+    char(key, ``)
 
     // Dispatch the read key to a handler.
     casecall ($(key))

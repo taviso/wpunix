@@ -6,6 +6,7 @@
 #include "keycodes.h"
 #include "prompt.h"
 #include "printer.h"
+#include "strings.h"
 
 #pragma title Manage Pdfmark Annotations
 
@@ -13,11 +14,14 @@
 assign(option, 0)
 
 // Draw all the menu options.
+// Syntax: call(drawmenu, xpos, ypos, width)
 function(drawmenu,
-    // Choose Menu position
-    assign(xpos, 5)
-    assign(ypos, 5)
-    assign(width, 60)
+    // Choose Menu position.
+    $pop(width)
+    $pop(ypos)
+    $pop(xpos)
+
+    // Select the current entry.
     assign(entry, -1)
 
     // Most drawing and positioning commands only work inside prompt().
@@ -61,36 +65,50 @@ function(drawmenu,
     // Move the cursor out of the way.
     prompt(curshome())
 
-    // If we never found an active entry, scroll around to top.
-    if ($(option) < 0 or $(option) > $(entry))
+    // If we never found an active entry, scroll around to top and try again.
+    if ($(option) < 0 $or $(option) > $(entry))
         assign(option, 0)
-        call(drawmenu)
+        call(drawmenu, $(xpos), $(ypos) - $(entry) - 3, $(width))
     endif
 )
 
 // Choose the next option above.
 function(menuup,
     $dec(option)
-    call(drawmenu)
+    call(drawmenu, 5, 5, 60)
 )
 
 // Choose the next option down.
 function(menudown,
     $inc(option)
-    call(drawmenu)
+    call(drawmenu, 5, 5, 60)
 )
 
+// Add a PDF named location.
 function(namelocation,
+    text(destname, `Enter name of current location (e.g. MyLocation): `)
 
-    text(destname, `Enter name of location (e.g. MyLocation): `)
+    // Check that anything was entered.
+    if ($len(destname) = 0)
+        status(`Error: location name required`) wait(30) status(``)
+        goto(namelocation)
+    endif
 
-    /* Insert a Printer Command */
+    // Use a printer command to add a PDF name
     postscript(`_DU [ /Dest /$(destname) /View [/XYZ DUx DUy 0] /DEST pdfmark`)
 )
 
+// Add a Link to a named location.
 function(createlink,
+
     text(destname, `Enter name of location (e.g. MyLocation): `)
     text(linktext, (`Enter link to display (e.g. page 2) `))
+
+    // Check that anything was entered.
+    if ($len(destname) = 0 $or $len(linktext) = 0)
+        status(`Error: location name required`) wait(30) status(``)
+        goto(createlink)
+    endif
 
     postscript(`gsave ($(linktext)) true charpath flattenpath `
                `[ /Rect [ pathbbox ] /Dest /$(destname) /Subtype /Link /ANN pdfmark `
@@ -102,6 +120,11 @@ function(createlink,
 
 function(addcomment,
     text(comment, `Enter Comment: `)
+
+    if ($len(comment) = 0)
+        status(`Error: no comment entered`) wait(30) status(``)
+        return(-1)
+    endif
 
     postscript(`[ /Contents ($(comment)) /Rect [ currentpoint currentpoint ] /ANN pdfmark `)
 )
@@ -123,11 +146,11 @@ function(menuquit,
 )
 
 // Draw the base menu.
-call(drawmenu)
+call(drawmenu, 5, 5, 60)
 
 // Wait for a key press.
 while ($true)
-    look(key)
+    char(key,``)
 
     // Dispatch the read key to a handler.
     casecall ($(key))
