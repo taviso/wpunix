@@ -145,6 +145,12 @@ function(menuquit,
     quit()
 )
 
+// Dont run with any active blocks.
+if (stateset(STATE_BLOCK))
+    status(`Error: block cannot be active`) wait(30) status(``)
+    quit()
+endif
+
 // Draw the base menu.
 call(drawmenu, 5, 5, 60)
 
