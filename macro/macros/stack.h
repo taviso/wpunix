@@ -6,22 +6,22 @@
  */
 
 assign(_retval, 0)
-assign(_stack_ptr, 0)
+assign(_stackptr, 0)
 
 #define push(...)                               \
     foreach(_p, __VA_ARGS__)                    \
-        assign(`_stack_`$(_stack_ptr), $(_p))   \
-        $inc(_stack_ptr)                        \
+        assign(`_stack`$(_stackptr), $(_p))     \
+        $inc(_stackptr)                         \
     endfor
 
 #define pop(n)                              \
-    if ($(_stack_ptr) < n)                  \
+    if ($(_stackptr) < n)                   \
         status(`*** stack underflow ***`)   \
         quit()                              \
     endif                                   \
-    $sub(_stack_ptr, n)
+    $sub(_stackptr, n)
 
-#define $pop(var) pop(1) assign(_(var), $(`_stack_`$(_stack_ptr)))
+#define $pop(var) pop(1) assign(_(var), $(`_stack`$(_stackptr)))
 
 #define return(...) __VA_OPT__(assign(_retval, __VA_ARGS__)) {return}
 
