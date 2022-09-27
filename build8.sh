@@ -172,8 +172,11 @@ awk '$4 ~ /^[bc].a/ {
     wxar "${mode}" "${dst}" "${src}"
 done
 
-# Any extras
+# I think its a bug in the ship manifest that these arent included in
+# character mode.
 install -D --mode=0755 linux/bin/wpexc root/shbin10/wpexc
+install -D --mode=0755 linux/bin/cjpeg root/shbin10/cjpeg
+install -D --mode=0755 linux/bin/djpeg root/shbin10/djpeg
 
 # My updated xterm terminal definitions.
 cp -f ../xterm.trs root/shlib10/xterm.trs
