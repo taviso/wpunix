@@ -1,5 +1,5 @@
 Name:           wordperfect8
-Version:        0.1
+Version:        0.10
 Release:        1%{?dist}
 Summary:        WordPerfect for UNIX (TM) Character Terminals
 License:        Abandonware
@@ -41,6 +41,9 @@ cp -r %{name}_i386/usr %{buildroot}
 /usr/bin/wp
 
 %changelog
+* Tue Sep 27 2022 Dominik Mierzejewski <dominik@greysector.net> - 0.10-1
+- make version match actual tag in github release
+
 * Sat Aug 13 2022 Tavis Ormandy <taviso@gmail.com>
 - Renamed to match deb.
 * Sat Aug 13 2022 Tavis Ormandy <taviso@gmail.com>
