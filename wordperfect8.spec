@@ -47,8 +47,8 @@ make %{name}_i386
 chrpath -d %{name}_i386/opt/wp80/lib/ld-2.0.7.so
 
 %install
-cp -r %{name}_i386/opt %{buildroot}
-cp -r %{name}_i386/usr %{buildroot}
+cp -pr %{name}_i386/opt %{buildroot}
+cp -pr %{name}_i386/usr %{buildroot}
 
 %files
 /opt
@@ -62,6 +62,7 @@ cp -r %{name}_i386/usr %{buildroot}
 - add missing BuildRequires and appropriate ExclusiveArch
 - strip redundant rpath
 - filter private libs from Provides:
+- preserve file timestamps
 
 * Sat Aug 13 2022 Tavis Ormandy <taviso@gmail.com>
 - Renamed to match deb.
