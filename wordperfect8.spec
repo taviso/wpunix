@@ -29,6 +29,7 @@ Provides:       bundled(libc) = 5.3.12-29
 #
 
 %define __strip /bin/true
+%global __provides_exclude_from ^/opt/wp80/lib
 
 %description
 WordPerfect is a word processing application for character terminals.
@@ -60,6 +61,7 @@ cp -r %{name}_i386/usr %{buildroot}
 - use a nicer source download URL
 - add missing BuildRequires and appropriate ExclusiveArch
 - strip redundant rpath
+- filter private libs from Provides:
 
 * Sat Aug 13 2022 Tavis Ormandy <taviso@gmail.com>
 - Renamed to match deb.
