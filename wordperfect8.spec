@@ -9,7 +9,18 @@ Source0:        https://github.com/taviso/wpunix/archive/v%{version}/%{name}-%{v
 Source1:        https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/libc-5.3.12-27.i386.rpm
 Source2:        https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/glibc-2.0.7-29.i386.rpm
 Source3:        https://archive.org/download/corel-wpunix-8/COREL_WPUNIX_1.iso
-Requires:       glibc(x86-32)
+ExclusiveArch:  i686
+BuildRequires:  bsdtar
+BuildRequires:  gcc
+BuildRequires:  gdb
+BuildRequires:  glibc-devel%{_isa}
+BuildRequires:  glibc-static%{_isa}
+BuildRequires:  make
+BuildRequires:  patchelf
+# just to avoid patching build script, not used for build
+BuildRequires:  wget
+Provides:       bundled(glibc) = 2.0.7-27
+Provides:       bundled(libc) = 5.3.12-29
 
 # Instructions:
 # $ spectool -g -R wordperfect8.spec
@@ -45,6 +56,7 @@ cp -r %{name}_i386/usr %{buildroot}
 - make version match actual tag in github release
 - fix typo in libc download URL
 - use a nicer source download URL
+- add missing BuildRequires and appropriate ExclusiveArch
 
 * Sat Aug 13 2022 Tavis Ormandy <taviso@gmail.com>
 - Renamed to match deb.
