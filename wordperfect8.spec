@@ -11,6 +11,7 @@ Source2:        https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i
 Source3:        https://archive.org/download/corel-wpunix-8/COREL_WPUNIX_1.iso
 ExclusiveArch:  i686
 BuildRequires:  bsdtar
+BuildRequires:  chrpath
 BuildRequires:  gcc
 BuildRequires:  gdb
 BuildRequires:  glibc-devel%{_isa}
@@ -24,7 +25,7 @@ Provides:       bundled(libc) = 5.3.12-29
 
 # Instructions:
 # $ spectool -g -R wordperfect8.spec
-# $ QA_RPATHS=$(( 0x0001|0x0010 )) rpmbuild --target i386 -bb wordperfect8.spec
+# $ setarch i686 rpmbuild -bb wordperfect8.spec
 #
 
 %define __strip /bin/true
@@ -42,6 +43,7 @@ cp %{SOURCE1} %{SOURCE2} %{SOURCE3} .
 
 %build
 make %{name}_i386
+chrpath -d %{name}_i386/opt/wp80/lib/ld-2.0.7.so
 
 %install
 cp -r %{name}_i386/opt %{buildroot}
@@ -57,6 +59,7 @@ cp -r %{name}_i386/usr %{buildroot}
 - fix typo in libc download URL
 - use a nicer source download URL
 - add missing BuildRequires and appropriate ExclusiveArch
+- strip redundant rpath
 
 * Sat Aug 13 2022 Tavis Ormandy <taviso@gmail.com>
 - Renamed to match deb.
