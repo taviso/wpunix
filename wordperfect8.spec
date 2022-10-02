@@ -51,8 +51,8 @@ cp -pr %{name}_i386/opt %{buildroot}
 cp -pr %{name}_i386/usr %{buildroot}
 
 %files
-/opt
-/usr/bin/wp
+/opt/wp80
+%{_bindir}/wp
 
 %changelog
 * Tue Sep 27 2022 Dominik Mierzejewski <dominik@greysector.net> - 0.10-1
