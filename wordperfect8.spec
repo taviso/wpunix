@@ -25,7 +25,7 @@ Provides:       bundled(libc) = 5.3.12-29
 
 # Instructions:
 # $ spectool -g -R wordperfect8.spec
-# $ setarch i686 rpmbuild -bb wordperfect8.spec
+# $ QA_RPATHS=$(( 0x0001|0x0010 )) setarch i686 rpmbuild -bb wordperfect8.spec
 #
 
 %define __strip /bin/true
@@ -44,7 +44,8 @@ cp %{SOURCE1} %{SOURCE2} %{SOURCE3} .
 
 %build
 make %{name}_i386
-chrpath -d %{name}_i386/opt/wp80/lib/ld-2.0.7.so
+# FIXME: This should work but can cause crashes on startup.
+# chrpath -d %{name}_i386/opt/wp80/lib/ld-2.0.7.so
 
 %install
 cp -pr %{name}_i386/opt %{buildroot}
