@@ -82,6 +82,7 @@ objcopy -W geteuid      \
         -W _fxstat      \
         -W _xstat       \
         -W _init        \
+        -W times        \
         lib/libc.so.${libcver} lib/libc.so.${libcver}
 
 # Extract original WP distribution.

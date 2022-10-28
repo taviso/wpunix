@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <sys/sysmacros.h>
+#include <sys/times.h>
 #include <unistd.h>
 #include <errno.h>
 #include <dirent.h>
@@ -152,4 +153,11 @@ uid_t geteuid(void)
 uid_t getuid(void)
 {
     return syscall(__NR_getuid32);
+}
+
+clock_t times(struct tms *buf)
+{
+    // Adjust the ticks origin, to avoid early-boot compatability issues. Note
+    // that wp does not use the parameter.
+    return (time(0) - (50 * 365 * 24 * 60 * 60)) * sysconf(_SC_CLK_TCK);
 }

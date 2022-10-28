@@ -1,6 +1,7 @@
 #ifndef __COMPAT32_H
 #define __COMPAT32_H
 
+#define __NR_times 43
 #define __NR_readlink 85
 #define __NR_stat 106
 #define __NR_lstat 107
