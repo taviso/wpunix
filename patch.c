@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <time.h>
+#include <errno.h>
 
 #include "wptypes.h"
 #include "wpfuncs.h"
@@ -27,6 +29,22 @@ static void xy_xterm_mouse()
     *mouse_y = msqot() - 0x21;
 }
 
+// The wp implementation of dodelay() busy waits, which means macros waiting
+// for responses or using {WAIT} keep a whole core busy. Let's use sleep
+// instead.
+static void delay_millis(int delay)
+{
+    struct timespec req = {
+        .tv_sec = delay / 100,
+        .tv_nsec = (delay % 100) * 10000000,
+    };
+
+    do {
+        if (nanosleep(&req, &req) == 0)
+            return;
+    } while (errno == EINTR);
+}
+
 void _init()
 {
     // This code is called on startup, we can hook or replace wp internals.
@@ -34,4 +52,7 @@ void _init()
     // Patch the mouse event callback to use an XTerm compatible version.
     ms_tbl[0].nbytes     = 3;
     ms_tbl[0].mscallback = xy_xterm_mouse;
+
+    // Insert hooks and redirects.
+    insert_function_redirect(dodelay, delay_millis, HOOK_REPLACE_FUNCTION);
 }
