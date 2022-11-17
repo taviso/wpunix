@@ -164,4 +164,7 @@ while ($true)
         match({down}, menudown)
         match({enter}, menuquit)
     endcase
+
+    // Sleep for a decisecond.
+    wait(1)
 endwhile
