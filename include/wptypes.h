@@ -9,5 +9,10 @@ struct MSTBL {
     void      (*mscallback)();
 };
 
+struct WPCHAR {
+    uint8_t set;
+    uint8_t c;
+};
+
 #pragma pack(pop)
 #endif

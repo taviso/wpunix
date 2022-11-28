@@ -1,8 +1,10 @@
 #define _GNU_SOURCE
-#include <signal.h>
+#include <sys/ioctl.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
 #include <time.h>
 #include <errno.h>
 
@@ -45,6 +47,33 @@ static void delay_millis(int delay)
     } while (errno == EINTR);
 }
 
+// Fake a resize event by setting up a SIGWINCH handler.
+static void win_resize_event(int signum)
+{
+    struct winsize w = {0};
+
+    // Fetch the new size.
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) != 0) {
+        return;
+    }
+
+    // Make sure this looks sane.
+    if (w.ws_col < 24)
+        w.ws_col = 24;
+    if (w.ws_row < 80)
+        w.ws_row = 80;
+
+    // Okay, send this to wordperfect.
+    win_resize(w.ws_col, w.ws_row);
+
+    // Rewrite screen.
+    frewrt();
+}
+
+static struct sigaction winchact = {
+    .sa_handler = win_resize_event,
+};
+
 void _init()
 {
     // This code is called on startup, we can hook or replace wp internals.
@@ -55,4 +84,9 @@ void _init()
 
     // Insert hooks and redirects.
     insert_function_redirect(dodelay, delay_millis, HOOK_REPLACE_FUNCTION);
+
+    // WordPerfect expects the terminal to send an escape sequence on resize.
+    // This isn't how things work on Linux, but we can fake it by setting up a
+    // SIGWINCH handler.
+    sigaction(SIGWINCH, &winchact, NULL);
 }
