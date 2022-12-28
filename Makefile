@@ -1,4 +1,4 @@
-CPPFLAGS=-Iinclude -Iintercept
+CPPFLAGS=-Iinclude -Iintercept -U_FORTIFY_SOURCE
 CFLAGS=-fno-stack-protector -m32
 
 .PHONY: clean

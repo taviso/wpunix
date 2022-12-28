@@ -1,4 +1,5 @@
-CFLAGS=-O2 -ggdb3 -m32 -std=gnu99 -Wno-multichar -w -DHAVE_CONFIG_H -I. -fno-stack-protector -fPIC
+CFLAGS=-O2 -ggdb3 -m32 -std=gnu99 -Wno-multichar -w -I. -fno-stack-protector -fPIC
+CPPFLAGS=-DHAVE_CONFIG_H -U_FORTIFY_SOURCE
 LDFLAGS= $(CFLAGS) -m32
 
 all: libdisasm.a
