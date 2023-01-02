@@ -74,6 +74,8 @@ static struct sigaction winchact = {
     .sa_handler = win_resize_event,
 };
 
+uint16_t zero_ext_mapkey(uint16_t code);
+
 void _init()
 {
     // This code is called on startup, we can hook or replace wp internals.
@@ -84,6 +86,7 @@ void _init()
 
     // Insert hooks and redirects.
     insert_function_redirect(dodelay, delay_millis, HOOK_REPLACE_FUNCTION);
+    insert_function_redirect(mapkey, zero_ext_mapkey, HOOK_REPLACE_FUNCTION);
 
     // WordPerfect expects the terminal to send an escape sequence on resize.
     // This isn't how things work on Linux, but we can fake it by setting up a

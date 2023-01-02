@@ -25,11 +25,12 @@ intercept/hook.o intercept/libdisasm.a:
 	make -C intercept
 
 
-libwppatch.so: patch.o intercept/hook.o intercept/libdisasm.a
+libwppatch.so: patch.o intercept/hook.o patches/mapkey.o intercept/libdisasm.a
 	ld -m elf_i386 -shared -o $@ $^
 
 clean:
 	rm -f *.o *.deb *.so
+	rm -f patches/*.o
 	rm -rf build wordperfect?_i386
 	rm -rf lib
 	make -C intercept clean
