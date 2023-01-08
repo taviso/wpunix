@@ -1,0 +1,13 @@
+This is a symbol file for analyzing crashes or bugs in WordPerfect8.
+
+!! You *do not* need this file unless you're a developer trying to debug a problem. !!
+
+To use this file with gdb, attach to the wp process and type:
+
+```
+(gdb) add-symbol-file /path/to/wp.dbg
+```
+
+You should now be able to set breakpoints, and examine the callstack.
+
+https://github.com/taviso/wpunix/wiki/Hacking

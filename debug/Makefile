@@ -36,9 +36,12 @@ basemap.s:
 	ld $(LDFLAGS) -Tdata=$(DATA_addr) -Ttext=$(TEXT_addr) -Tbss=$(BSS_addr) -o $@ $^
 	strip --only-keep-debug $@
 
+dist: wp.dbg README
+	tar -zcvf wordperfect8-dbg.tar.gz $^
+
 clean:
 	rm -f *.o
 	rm -f *.dbg
 	rm -f a.out
 	rm -f types.s
-	rm -f wp
+	rm -f wordperfect8-dbg.tar.gz
