@@ -49,8 +49,10 @@ There is a quick start guide on the [wiki](https://github.com/taviso/wpunix/wiki
 
 The complete user manual is available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
 
-There is also a huge amount of useful information that is *mostly* relevant to
-wpunix on the [wpdos](http://www.columbia.edu/~em36/wpdos/unix.html) site.
+If you've never used WordPerfect before, you might prefer to start with the `cua` layout. This
+enables the familiar <kbd>Ctrl</kbd>+<kbd>C</kbd> for *Copy*, <kbd>Ctrl</kbd>+<kbd>V</kbd> for
+*Paste*, and so on. Follow the instructions
+[here](https://github.com/taviso/wpunix/wiki/Getting-Started#keyboard-layout) to enable it.
 
 > Note: Print previews require a terminal with sixel support, such as [XTerm](https://invisible-island.net/xterm/).
 
