@@ -49,7 +49,7 @@ There is a quick start guide on the [wiki](https://github.com/taviso/wpunix/wiki
 
 The complete user manual is available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
 
-If you've never used WordPerfect before, you might prefer to start with the `cua` Keyboard Layout.
+If you've never used WordPerfect before, you might prefer the `cua` Keyboard Layout.
 This enables the familiar <kbd>Ctrl</kbd>+<kbd>C</kbd> for *Copy*, <kbd>Ctrl</kbd>+<kbd>V</kbd>
 for *Paste*, and so on. Follow the instructions
 [here](https://github.com/taviso/wpunix/wiki/Getting-Started#keyboard-layout) to enable it.
