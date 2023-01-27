@@ -194,6 +194,9 @@ cp -f ../macro/macros/*.h root/wpmacros/include/
 # Ghostscript Printer Resources
 cp -f ../gscript.all root/shlib10/gscript.all
 
+# Add a CUA Keyboard Layout
+cp -f ../cua.wpk root/wpmacros/
+
 # Set default language.
 printf "us\n" > root/shlib10/.def.lang
 printf "us\n" > root/wplib/.def.lang
