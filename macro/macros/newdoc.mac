@@ -1,0 +1,20 @@
+/* vim: set ft=cpp: */
+
+#include "macro.h"
+#include "system.h"
+#include "utils.h"
+
+#pragma title New Document
+
+// Find the first document blank document.
+require(STATE_NORMAL)
+
+// This is used for the CUA Keyboard Layout, Ctrl+N "New"
+for (doc, system(SYS_NUMBER) + 1, 9, 1)
+    {home}$(doc)
+    if (system(SYS_DOCUMENT) $eq 256)
+        {quit}
+    endif
+endfor
+
+status(`Error: Maximum open documents reached`) wait(30) status(``)
