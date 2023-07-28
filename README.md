@@ -1,13 +1,8 @@
 # WordPerfect for UNIX Character Terminals
 
-This is a set of build scripts and patches to make WordPerfect for UNIX
-work on modern Linux.
+This is a set of build scripts and patches to make _Corel WordPerfect 8 For UNIX_ usable on modern Linux.
 
-WordPerfect is a powerful *word processor* for the terminal. There is more
-information and a quick introduction on the
-[wiki](https://github.com/taviso/wpunix/wiki/Getting-Started), and a
-[FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and
-problems.
+WordPerfect is a powerful *word processor* for the terminal. There is more information and a quick introduction on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started), and a [FAQ](https://github.com/taviso/wpunix/wiki/FAQ) covering common questions and problems.
 
 It features print previews, an equation editor, mouse support, drop down menus,
 spelling and grammar checking, builtin macro editor and more.
@@ -18,8 +13,7 @@ spelling and grammar checking, builtin macro editor and more.
 
 > Note: If you just want a `deb` or `rpm` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
 
-You need the following file to build this, available
-[here](https://archive.org/details/corel-wpunix-8/box_f.jpg).
+The necessary _Corel WordPerfect 8 For UNIX_ installation ISO can be downloaded from the Internet Archive [here](https://archive.org/details/corel-wpunix-8/box_f.jpg).
 
 ```
 $ md5sum COREL_WPUNIX_1.iso
@@ -42,17 +36,13 @@ The following packages are required to build the WordPerfect patches.
 
 ## Getting Started
 
-Run `wp` to start WordPerfect. The default keybinding to open the menu is
-<kbd>Esc</kbd>+<kbd>=</kbd>.
+Run `wp` to start WordPerfect. The default keybinding to open the menu is <kbd>Esc</kbd>+<kbd>=</kbd>.
 
 There is a quick start guide on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started).
 
 The complete user manual is available online [here](https://lock.cmpxchg8b.com/files/wp8gui.pdf).
 
-If you've never used WordPerfect before, you might prefer the `cua` Keyboard Layout.
-This enables the familiar <kbd>Ctrl</kbd>+<kbd>C</kbd> for *Copy*, <kbd>Ctrl</kbd>+<kbd>V</kbd>
-for *Paste*, and so on. Follow the instructions
-[here](https://github.com/taviso/wpunix/wiki/Getting-Started#keyboard-layout) to enable it.
+If you've never used WordPerfect before, you might prefer the `cua` Keyboard Layout. This enables the familiar <kbd>Ctrl</kbd>+<kbd>C</kbd> for *Copy*, <kbd>Ctrl</kbd>+<kbd>V</kbd> for *Paste*, and so on. Follow the instructions [here](https://github.com/taviso/wpunix/wiki/Getting-Started#keyboard-layout) to enable it.
 
 > Note: Print previews require a terminal with sixel support, such as [XTerm](https://invisible-island.net/xterm/).
 
