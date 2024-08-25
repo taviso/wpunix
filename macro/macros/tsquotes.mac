@@ -18,7 +18,7 @@ case (quote(leftchar()))
     match(quote(CODE_TAB), NewQuote)
 
     /* Toggle existing quote */
-    match("‛", ToggleCloseQuote)
+    match("‘", ToggleCloseQuote)
     match("’", ToggleOpenQuote)
 endcase
 
@@ -29,7 +29,7 @@ quit()
 /* Adjacent to an existing quote; toggle it */
 label(ToggleOpenQuote)
     {Backspace}
-    literal(‛)
+    literal(‘)
     quit()
 
 label(ToggleCloseQuote)
@@ -39,5 +39,5 @@ label(ToggleCloseQuote)
 
 /* Whitespace; assume we're opening a new quote */
 label(NewQuote)
-    literal(‛)
+    literal(‘)
     quit()
