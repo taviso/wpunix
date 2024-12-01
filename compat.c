@@ -17,7 +17,7 @@
 
 #define _STAT_VER_LINUX_OLD 1
 
-static void translate_stat64_struct(struct oldstat *dst, struct linux_stat64 *src)
+static void translate_stat64_struct(struct oldstat *src, struct linux_stat64 *dst)
 {
     dst->st_dev     = src->st_dev;
     dst->st_ino     = src->st_ino;
