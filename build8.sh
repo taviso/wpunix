@@ -20,8 +20,8 @@ declare wpurl="https://archive.org/details/corel-wpunix-8/"
 declare tmpfile="$(mktemp)"
 declare topdir="${PWD}"
 
-declare libcurl="https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/libc-5.3.12-27.i386.rpm"
-declare ldsourl="https://archive.download.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/glibc-2.0.7-29.i386.rpm"
+declare libcurl="https://legacy.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/libc-5.3.12-27.i386.rpm"
+declare ldsourl="https://legacy.redhat.com/pub/redhat/linux/5.2/en/os/i386/RedHat/RPMS/glibc-2.0.7-29.i386.rpm"
 
 test -f "${topdir}/COREL_WPUNIX_1.iso" || {
     echo "You need to download COREL_WPUNIX_1.iso from ${wpurl}"
