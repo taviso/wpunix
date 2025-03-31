@@ -19,14 +19,14 @@ wordperfect8_i386: libcompat.so libwppatch.so | macro/mactool util/grsutil
 	bash build8.sh $@
 
 libcompat.so: compat.o
-	ld -m elf_i386 -shared -o $@ $<
+	ld -m elf_i386 --hash-style=sysv -shared -o $@ $<
 
 intercept/hook.o intercept/libdisasm.a:
 	make -C intercept
 
 
 libwppatch.so: patch.o intercept/hook.o patches/mapkey.o intercept/libdisasm.a
-	ld -m elf_i386 -shared -o $@ $^
+	ld -m elf_i386 --hash-style=sysv -shared -o $@ $^
 
 clean:
 	rm -f *.o *.deb *.so
