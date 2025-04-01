@@ -79,6 +79,7 @@
 #define MENU_SPELLER            17
 #define MENU_SPELLER_NOTFOUND   64
 #define MENU_SPELL              32837
+#define MENU_RETRIEVE           32821
 
 /* Test if EditType matches type */
 #define edittype(n) {SYSTEM}EditType~=n
