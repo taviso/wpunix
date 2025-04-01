@@ -39,6 +39,24 @@ The following packages are required to build the WordPerfect patches.
 | rpm2cpio                  | glibc-static        |
 |                           | glibc-static.i686   |
 
+Type `make` to produce a `.deb` file, or use the included `.spec` file to create an `.rpm`.
+
+#### Manual Installation
+
+If you don't want an `rpm` or `deb` file, you can try this instead:
+
+```
+$ make wordperfect8_i386
+```
+
+This should prepare the files, then you can install them manually like this:
+
+```
+$ sudo cp -r wordperfect8_i386/opt/wp80 /opt
+$ sudo cp wordperfect8_i386/usr/bin/wp /usr/bin/
+```
+
+To uninstall, simply `rm -rf /opt/wp80 /usr/bin/wp`
 
 ## Getting Started
 
