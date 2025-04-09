@@ -61,7 +61,7 @@ To uninstall, simply `rm -rf /opt/wp80 /usr/bin/wp`
 ## Getting Started
 
 Run `wp` to start WordPerfect. The default keybinding to open the menu is
-<kbd>Esc</kbd>+<kbd>=</kbd>.
+<kbd>Esc</kbd>,<kbd>=</kbd>.
 
 There is a quick start guide on the [wiki](https://github.com/taviso/wpunix/wiki/Getting-Started).
 
