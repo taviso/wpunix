@@ -19,7 +19,7 @@ spelling and grammar checking, builtin macro editor and more.
 > Note: If you just want a `deb` or `rpm` to try out, check the [Releases](https://github.com/taviso/wpunix/releases) tab.
 
 You need the following file to build this, available
-[here](https://archive.org/details/corel-wpunix-8/box_f.jpg).
+[here](https://archive.org/download/corel-wpunix-8/COREL_WPUNIX_1.iso).
 
 ```
 $ md5sum COREL_WPUNIX_1.iso
