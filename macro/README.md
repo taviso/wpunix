@@ -129,7 +129,7 @@ familiar, and easier to read.
 To compile this, you would use a commandline like this:
 
 ```
-$ cpp tdquotes.mac | ./mactool -c -s -t "Typographic Single Quotes" -o tdquotes.wpm
+$ cpp -I/opt/wp80/wpmacros/include/ tdquotes.mac | /opt/wp80/shbin10/mactool -c -s -t "Typographic Single Quotes" -o tdquotes.wpm
 ```
 
 See the [macros
